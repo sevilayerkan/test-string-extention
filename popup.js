@@ -1,11 +1,10 @@
-document.addEventListener("DOMContentLoaded", function () {
+ocument.addEventListener("DOMContentLoaded", function () {
     const generateButton = document.getElementById("generateButton");
     generateButton.addEventListener("click", generateString);
 
     const copyButton = document.getElementById("copyButton");
     copyButton.addEventListener("click", copyToClipboard);
 });
-
 
 function generateString() {
     const lengthInput = document.getElementById("lengthInput").value;
@@ -16,25 +15,21 @@ function generateString() {
     const loremIpsumWordsInput = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies ultricies, nunc nisl aliquam nunc, vitae aliquam";
 
     const length = parseInt(lengthInput);
-    const useSpace = !removeSpaceInput.checked;
-    const usePunct = !removePunctInput.checked;
+    const useSpace = removeSpaceInput;
+    const usePunct = removePunctInput;
 
     const generatedString = generateText(loremIpsumWordsInput, length, useSpace, usePunct);
-    resultText.value = generatedString
-
+    resultText.value = generatedString;
 }
 
 function generateText(text, length, useSpace, usePunct) {
+    let resultText = text.repeat(Math.ceil(length / text.length)).substring(0, length);
 
-    const lorem = text;
-    let resultText = lorem.repeat(Math.ceil(length / lorem.length)).substring(0, length);
-
-    if(usePunct){
+    if (usePunct) {
         resultText = resultText.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
-        console.log(resultText);
-    }   
-    if(useSpace){
-        resultText = resultText.replace(/\s/g, '');
+    }
+    if (useSpace) {
+        resultText = resultText.replace(/\s+/g, '');
     }
 
     return resultText;
