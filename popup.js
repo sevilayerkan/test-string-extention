@@ -1,4 +1,4 @@
-ocument.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     const generateButton = document.getElementById("generateButton");
     generateButton.addEventListener("click", generateString);
 
