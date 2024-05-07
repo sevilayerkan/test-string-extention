@@ -1,20 +1,30 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "Test String Generator",
     "version": "1.0",
     "description": "Generate lorem ipsum test strings for testing purposes.",
     "icons": {
         "16": "icon16.png"
     },
-    "browser_action": {
+    "action": {
         "default_icon": {
             "16": "icon16.png"
         },
         "default_popup": "popup.html"
     },
+    "content_scripts": [
+        {
+            "js" : [
+                "func.js"
+            ]
+        }
+    ],
     "permissions": [
         "activeTab",
+        "clipboardRead",
         "clipboardWrite",
-        "storage"
+        "storage",
+        "fontSettings",
+        "scripting"
     ]
 }
