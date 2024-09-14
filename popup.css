@@ -1,0 +1,73 @@
+body {
+  background-color: rgb(177, 174, 174);
+  width: 300px;
+  padding: 10px;
+}
+
+h3 {
+  text-align: center;
+}
+
+button {
+  padding: 5px;
+}
+
+textarea {
+  background-color: darkgray;
+  width: 90%;
+  height: 100px;
+  align-self: center;
+  color: black;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#app {
+  align-items: center;
+}
+
+#generateButton {
+  align-self: center;
+  background-color: rgb(255, 255, 255);
+  text-align: center;
+  color: black;
+  justify-content: center;
+}
+
+#conditions {
+  align-content: center;
+  padding: 5px;
+  border: 1px dotted black;
+}
+
+#generateButtonContainer {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* Add this to your existing CSS */
+.feedback {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  z-index: 1000;
+}
+
+.feedback.success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.feedback.error {
+  background-color: #f44336;
+  color: white;
+}
