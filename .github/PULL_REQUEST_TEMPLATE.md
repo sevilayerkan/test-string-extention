@@ -1,7 +1,7 @@
 <!--
 Thank you for contributing to Test String Chrome Extention
 
-Before opening this PR please make sure you've read the contribution guideline. 
+Before opening this PR please make sure you've read the contribution guideline.
 
 Describe why this Pull Request needs to be merged. What bug have you fixed? What feature have you added? Why is it important?
 
@@ -28,5 +28,6 @@ A clear and concise description of what's being changed. [REPLACE ME]
 Before submitting the PR make sure the following are checked:
 
 <!--*[ ] I've checked [contribution guide](../../CONTRIBUTING.md)-->
-* [ ] I've created new branch in my fork for this PR.
-* [ ] For content changes, I have completed the [self-review checklist](self_review.md).
+
+- [ ] I've created new branch in my fork for this PR.
+- [ ] For content changes, I have completed the [self-review checklist](self_review.md).

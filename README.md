@@ -1,9 +1,11 @@
 # Text String Generator Chrome Extension
 
 ## Project Details
+
 Text String Generator is a Chrome browser extension designed to easily generate test text datas with customizable features. It provides a simple interface to specify the desired text length, remove punctuation, remove spaces, and copy the generated text to the clipboard.
 
 ## Installation
+
 Follow these steps to install and use the Test String Generator Chrome extension or download repo into your computer and open html file in your favorite chromium based browser:
 
 ### For installing as Chrome extention:
@@ -38,4 +40,5 @@ Click "Generate" to generate Lorem Ipsum text.
 Copy the generated text to the clipboard using the "Copy to Clipboard" button.
 
 ## Contributing and Contact
+
 Contributions are welcome! If you encounter any issues or have suggestions for improvements, please feel free to reach out to me through the information provided in my profile or via Discord DM (notdepressedeveloper).

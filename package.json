@@ -1,24 +1,24 @@
 {
-    "name": "test-string-generator",
-    "version": "1.0.0",
-    "description": "Chrome extension to generate test strings",
-    "main": "popup.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "build": "echo \"No build step required\" && exit 0",
-      "lint": "eslint *.js",
-      "format": "prettier --write *.{js,html,css,json}"
-    },
-    "keywords": [
-      "chrome-extension",
-      "test-string",
-      "lorem-ipsum"
-    ],
-    "author": "sevilayerkan",
-    "license": "MIT",
-    "devDependencies": {
-      "eslint": "^8.42.0",
-      "open": "^10.1.0",
-      "prettier": "2.8.8"
-    }
+  "name": "test-string-generator",
+  "version": "1.0.0",
+  "description": "Chrome extension to generate test strings",
+  "main": "popup.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "echo \"No build step required\" && exit 0",
+    "lint": "eslint *.js",
+    "format": "prettier --write *.{js,html,css,json}"
+  },
+  "keywords": [
+    "chrome-extension",
+    "test-string",
+    "lorem-ipsum"
+  ],
+  "author": "sevilayerkan",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.42.0",
+    "open": "^10.1.0",
+    "prettier": "2.8.8"
   }
+}

@@ -160,3 +160,4 @@ dist
 .pnp.*
 
 # Ignore any other files or directories specific to your project
+.DS_Store

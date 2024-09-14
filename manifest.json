@@ -1,27 +1,27 @@
 {
-    "manifest_version": 3,
-    "name": "Test String Generator",
-    "version": "1.0.0",
-    "description": "Generate lorem ipsum test strings for testing purposes.",
-    "icons": {
+  "manifest_version": 3,
+  "name": "Test String Generator",
+  "version": "1.0.0",
+  "description": "Generate lorem ipsum test strings for testing purposes.",
+  "icons": {
+    "16": "icon16.png"
+  },
+  "action": {
+    "default_icon": {
       "16": "icon16.png"
     },
-    "action": {
-      "default_icon": {
-        "16": "icon16.png"
-      },
-      "default_popup": "popup.html"
-    },
-    "permissions": [
-      "activeTab",
-      "clipboardRead",
-      "clipboardWrite",
-      "storage",
-      "fontSettings",
-      "scripting",
-      "tabs"
-    ],
-    "background": {
-      "service_worker": "background.js"
-    }
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "clipboardRead",
+    "clipboardWrite",
+    "storage",
+    "fontSettings",
+    "scripting",
+    "tabs"
+  ],
+  "background": {
+    "service_worker": "background.js"
   }
+}
