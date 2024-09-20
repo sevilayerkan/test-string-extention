@@ -4,11 +4,11 @@
   "version": "1.0.0",
   "description": "Generate lorem ipsum test strings for testing purposes.",
   "icons": {
-    "16": "icon16.png"
+    "16": "assets/icon16.png"
   },
   "action": {
     "default_icon": {
-      "16": "icon16.png"
+      "16": "assets/icon16.png"
     },
     "default_popup": "popup.html"
   },
@@ -22,6 +22,6 @@
     "tabs"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "src/js/background.js"
   }
 }
