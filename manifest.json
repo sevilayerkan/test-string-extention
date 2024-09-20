@@ -22,6 +22,6 @@
     "tabs"
   ],
   "background": {
-    "service_worker": "src/js/background.js"
+    "service_worker": "background.js"
   }
 }
