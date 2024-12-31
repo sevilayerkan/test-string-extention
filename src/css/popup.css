@@ -71,3 +71,118 @@ textarea {
   background-color: #f44336;
   color: white;
 }
+
+/* Add these new styles */
+.tab-container {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.tab-buttons {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+
+.tab-button {
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  margin-right: 5px;
+  border-radius: 4px 4px 0 0;
+}
+
+.tab-button.active {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-bottom: none;
+}
+
+.tab-content {
+  display: none;
+  padding: 15px;
+  background-color: rgb(177, 174, 174);
+}
+
+.tab-content.active {
+  display: block;
+}
+
+#characterCount {
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.select-container {
+  margin-bottom: 15px;
+}
+
+.option-container {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+#dataType, #emailDomain {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+#customDomain {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.result-container {
+  margin-top: 15px;
+}
+
+#generateMiscButton {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.select-container select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: white;
+}
+
+.option-container {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.option-container label {
+  margin-right: 15px;
+}
+
+#miscResultText {
+  width: 100%;
+  min-height: 80px;
+  margin: 10px 0;
+  padding: 8px;
+  background-color: darkgray;
+}
+
+#generateMiscButton {
+  width: 100%;
+  margin: 10px 0;
+}

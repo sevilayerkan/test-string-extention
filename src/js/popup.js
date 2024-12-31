@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
   clearTextarea();
+  initializeTabs();
+  initializeCharacterCounter();
+  initializeMiscTab();
 
   const generateButton = document.getElementById('generateButton');
   const copyButton = document.getElementById('copyButton');
@@ -23,6 +26,43 @@ document.addEventListener('DOMContentLoaded', function () {
 
   copyButton.addEventListener('click', copyToClipboard);
 });
+
+function initializeTabs() {
+  const tabButtons = document.querySelectorAll('.tab-button');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Remove active class from all buttons and contents
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+      tabContents.forEach(content => content.classList.remove('active'));
+
+      // Add active class to clicked button and corresponding content
+      button.classList.add('active');
+      const tabId = button.getAttribute('data-tab');
+      document.getElementById(tabId).classList.add('active');
+    });
+  });
+}
+
+function initializeCharacterCounter() {
+  const counterText = document.getElementById('counterText');
+  const characterCount = document.getElementById('characterCount');
+
+  function updateCount() {
+    const text = counterText.value;
+    const chars = text.length;
+    const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+    const lines = text.trim() === '' ? '-' : text.split('\n').length;
+
+    characterCount.textContent = 
+      `Characters: ${chars} | Words: ${words} | Lines: ${lines}`;
+  }
+
+  counterText.addEventListener('input', updateCount);
+  // Initialize with empty state
+  updateCount();
+}
 
 // Clear textarea when the popup is shown
 chrome.runtime.onConnect.addListener(function (port) {

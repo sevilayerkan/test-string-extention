@@ -39,6 +39,12 @@ Enter the desired length and choose options for removing punctuation or spaces.
 Click "Generate" to generate Lorem Ipsum text.
 Copy the generated text to the clipboard using the "Copy to Clipboard" button.
 
+## Contributions
+
+This project uses the following dependencies:
+
+- [Custom Turkish Data Generator](https://github.com/tw4/responserun-mock)
+
 ## Contributing and Contact
 
 Contributions are welcome! If you encounter any issues or have suggestions for improvements, please feel free to reach out to me through the information provided in my profile or via Discord DM (notdepressedeveloper).
