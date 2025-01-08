@@ -7,92 +7,78 @@
     <title>Test String Generator</title>
   </head>
   <body>
-    <div id="app">
-      <h3>Test String Generator</h3>
+    <div class="app-container">
+      <h1>Test String Generator</h1>
+      
+      <div class="tabs">
+        <button class="tab-button active" data-tab="generator">Generator</button>
+        <button class="tab-button" data-tab="counter">Counter</button>
+        <button class="tab-button" data-tab="misc">Misc</button>
+      </div>
 
-      <div class="tab-container">
-        <div class="tab-buttons">
-          <button class="tab-button active" data-tab="generator">Generator</button>
-          <button class="tab-button" data-tab="counter">Character Counter</button>
-          <button class="tab-button" data-tab="misc">Misc Generator</button>
+      <div id="generator" class="tab-content active">
+        <div class="input-group">
+          <input type="number" id="lengthInput" placeholder="Text Length" min="1" max="100000">
+          
+          <label class="checkbox-wrapper">
+            <input type="checkbox" id="removePunct">
+            <span class="checkbox-label">Remove Punctuation</span>
+          </label>
+          
+          <label class="checkbox-wrapper">
+            <input type="checkbox" id="removeSpace">
+            <span class="checkbox-label">Remove Spaces</span>
+          </label>
         </div>
 
-        <div id="generator" class="tab-content active">
-          <div id="conditions" class="container">
-            <div id="lengthInputContainer">
-              <label for="lengthInput">Text Length: </label>
-              <input type="number" id="lengthInput" min="1" max="100000" value="" />
-            </div>
-            <div id="punctCheckboxContainer">
-              <input type="checkbox" id="removePunct" />
-              <label for="removePunct">Remove All Punctuations</label>
-            </div>
-            <div id="spaceCheckboxContainer">
-              <input type="checkbox" id="removeSpace" />
-              <label for="removeSpace">Remove Spaces</label>
-            </div>
-          </div>
+        <button id="generateButton" class="primary-button">Generate Text</button>
+        <textarea id="resultText" readonly placeholder="Generated text will appear here..."></textarea>
+        <button id="copyButton" class="secondary-button">Copy to Clipboard</button>
+      </div>
 
-          <div id="generateButtonContainer" class="container">
-            <button id="generateButton">Generate</button>
-          </div>
-
-          <div id="textContainer" class="container">
-            <textarea id="resultText"></textarea>
-            <br />
-            <button id="copyButton">Copy</button>
-          </div>
-        </div>
-
-        <div id="counter" class="tab-content">
-          <div class="container">
-            <textarea id="counterText" placeholder="Enter or paste your text here..."></textarea>
-            <div id="characterCount">
-              Characters: 0 | Words: 0 | Lines: 0
-            </div>
-          </div>
-        </div>
-
-        <div id="misc" class="tab-content">
-          <div class="container">
-            <div class="select-container">
-              <select id="dataType">
-                <option value="">Select Data Type</option>
-                <option value="name">Full Name</option>
-                <option value="email">Email</option>
-                <option value="address">Address</option>
-                <option value="password">Password</option>
-              </select>
-            </div>
-
-            <div id="nameOptions" class="option-container" style="display: none;">
-              <label>
-                <input type="radio" name="gender" value="male" checked> Male
-              </label>
-              <label>
-                <input type="radio" name="gender" value="female"> Female
-              </label>
-            </div>
-
-            <div id="emailOptions" class="option-container" style="display: none;">
-              <select id="emailDomain">
-                <option value="random">Random Domain</option>
-                <option value="example.com">example.com</option>
-                <option value="test.com">test.com</option>
-                <option value="custom">Custom Domain</option>
-              </select>
-              <input type="text" id="customDomain" placeholder="Enter custom domain" style="display: none;">
-            </div>
-
-            <button id="generateMiscButton">Generate</button>
-            <div class="result-container">
-              <textarea id="miscResultText" readonly></textarea>
-              <button id="copyMiscButton">Copy</button>
-            </div>
-          </div>
+      <div id="counter" class="tab-content">
+        <textarea id="counterText" placeholder="Enter or paste your text here..."></textarea>
+        <div id="characterCount" class="counter-stats">
+          Characters: 0 | Words: 0 | Lines: 0
         </div>
       </div>
+
+      <div id="misc" class="tab-content">
+        <select id="dataType" class="select-input">
+          <option value="">Select Data Type</option>
+          <option value="name">Full Name</option>
+          <option value="email">Email</option>
+          <option value="address">Address</option>
+          <option value="password">Password</option>
+        </select>
+
+        <div id="nameOptions" class="option-group">
+          <label class="radio-wrapper">
+            <input type="radio" name="gender" value="male" checked>
+            <span class="radio-label">Male</span>
+          </label>
+          <label class="radio-wrapper">
+            <input type="radio" name="gender" value="female">
+            <span class="radio-label">Female</span>
+          </label>
+        </div>
+
+        <div id="emailOptions" class="option-group">
+          <select id="emailDomain" class="select-input">
+            <option value="random">Random Domain</option>
+            <option value="example.com">example.com</option>
+            <option value="test.com">test.com</option>
+            <option value="custom">Custom Domain</option>
+          </select>
+          <input type="text" id="customDomain" class="text-input" placeholder="Enter custom domain">
+        </div>
+
+        <button id="generateMiscButton" class="primary-button">Generate</button>
+        <textarea id="miscResultText" readonly placeholder="Generated data will appear here..."></textarea>
+        <button id="copyMiscButton" class="secondary-button">Copy to Clipboard</button>
+      </div>
     </div>
+
     <script src="src/js/func.js"></script>
     <script src="src/js/copy.js"></script>
     <script src="src/js/popup.js"></script>

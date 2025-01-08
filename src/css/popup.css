@@ -1,188 +1,234 @@
+:root {
+  --primary-color: #2196F3;
+  --secondary-color: #90CAF9;
+  --background-color: #FFFFFF;
+  --text-color: #333333;
+  --border-color: #E0E0E0;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --radius: 8px;
+  --spacing: 16px;
+}
+
 body {
-  background-color: rgb(177, 174, 174);
-  width: 300px;
-  padding: 10px;
+  width: 350px;
+  margin: 0;
+  margin-top: 10px;
+  padding: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-h3 {
+/* Remove global font smoothing and apply selectively */
+* {
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing);
+}
+
+h1 {
+  font-size: 16px;
+  font-weight: 500;
   text-align: center;
+  margin: 0 0 var(--spacing);
+  color: var(--text-color);
+  letter-spacing: -0.02em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-button {
-  padding: 5px;
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: var(--spacing);
+}
+
+.tab-button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: var(--secondary-color);
+  color: var(--text-color);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.tab-button.active {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* Content Areas */
+.tab-content {
+  display: none;
+  flex-direction: column;
+  gap: var(--spacing);
+}
+
+.tab-content.active {
+  display: flex;
+}
+
+/* Form Elements */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input[type="number"],
+input[type="text"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  background: white;
+  font-size: 14px;
+  box-sizing: border-box;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
 }
 
 textarea {
-  background-color: darkgray;
-  width: 90%;
-  height: 100px;
-  align-self: center;
-  color: black;
+  min-height: 120px;
+  resize: vertical;
+  font-family: inherit;
 }
 
-.container {
+/* Checkboxes and Radio Buttons */
+.checkbox-wrapper,
+.radio-wrapper {
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-#app {
   align-items: center;
+  gap: 8px;
+  cursor: pointer;
 }
 
-#generateButton {
-  align-self: center;
-  background-color: rgb(255, 255, 255);
+/* Buttons */
+.primary-button,
+.secondary-button {
+  width: 90%;
+  padding: 10px;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 500;
+  align-self: start;
+  /* center the button! */
+  margin: 0 auto;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: ui-sans-serif, system-ui, -apple-system, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.primary-button {
+  background: var(--primary-color);
+  color: white;
+}
+
+.secondary-button {
+  background: var(--secondary-color);
+  color: var(--text-color);
+}
+
+/* Counter Stats */
+.counter-stats {
   text-align: center;
-  color: black;
-  justify-content: center;
+  font-size: 14px;
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-#conditions {
-  align-content: center;
-  padding: 5px;
-  border: 1px dotted black;
+/* Option Groups */
+.option-group {
+  display: none;
+  gap: 12px;
+  padding: 12px;
+  background: #F5F5F5;
+  border-radius: var(--radius);
 }
 
-#generateButtonContainer {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-/* Add this to your existing CSS */
+/* Feedback Messages */
 .feedback {
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-weight: bold;
-  z-index: 1000;
-}
-
-.feedback.success {
-  background-color: #4caf50;
+  padding: 12px 24px;
+  border-radius: var(--radius);
+  background: var(--primary-color);
   color: white;
+  font-weight: 500;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  animation: slideUp 0.3s ease;
 }
 
-.feedback.error {
-  background-color: #f44336;
-  color: white;
+@keyframes slideUp {
+  from { transform: translate(-50%, 20px); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
 }
 
-/* Add these new styles */
-.tab-container {
-  width: 100%;
-  margin-bottom: 15px;
+/* Enhanced Retina Display Support */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body {
+    font-size: 14px;
+  }
+  
+  input, select, textarea {
+    font-size: 16px;
+  }
+
+  .tab-button {
+    font-weight: 500;
+  }
+
+  textarea {
+    line-height: 1.5;
+  }
 }
 
-.tab-buttons {
-  display: flex;
-  border-bottom: 1px solid #ccc;
+/* Specific text rendering for UI elements */
+h1, 
+.tab-button, 
+.primary-button, 
+.secondary-button,
+.checkbox-label,
+.radio-label,
+.counter-stats {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
 }
 
-.tab-button {
-  padding: 8px 16px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  margin-right: 5px;
-  border-radius: 4px 4px 0 0;
+/* Input and textarea specific rendering */
+input, select, textarea {
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
 }
 
-.tab-button.active {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-bottom: none;
-}
-
-.tab-content {
-  display: none;
-  padding: 15px;
-  background-color: rgb(177, 174, 174);
-}
-
-.tab-content.active {
-  display: block;
-}
-
-#characterCount {
-  margin-top: 10px;
-  font-weight: bold;
-  text-align: center;
-}
-
-.select-container {
-  margin-bottom: 15px;
-}
-
-.option-container {
-  margin-bottom: 15px;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-}
-
-#dataType, #emailDomain {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-#customDomain {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-.result-container {
-  margin-top: 15px;
-}
-
-#generateMiscButton {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  background-color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.select-container select {
-  width: 100%;
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  background-color: white;
-}
-
-.option-container {
-  margin: 10px 0;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-}
-
-.option-container label {
-  margin-right: 15px;
-}
-
-#miscResultText {
-  width: 100%;
-  min-height: 80px;
-  margin: 10px 0;
-  padding: 8px;
-  background-color: darkgray;
-}
-
-#generateMiscButton {
-  width: 100%;
-  margin: 10px 0;
+.tab-button, .primary-button, .secondary-button {
+  font-family: ui-sans-serif, system-ui, -apple-system, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: -0.01em;
 }
