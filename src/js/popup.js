@@ -1,30 +1,44 @@
-document.addEventListener('DOMContentLoaded', function () {
-  clearTextarea();
-  initializeTabs();
-  initializeCharacterCounter();
-  initializeMiscTab();
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize main functionality
+  const generateBtn = document.getElementById('generateBtn');
+  const copyBtn = document.getElementById('copyBtn');
+  const generatedText = document.getElementById('generatedText');
 
-  const generateButton = document.getElementById('generateButton');
-  const copyButton = document.getElementById('copyButton');
+  generateBtn.addEventListener('click', () => {
+    const size = parseInt(document.getElementById('character-size').value);
+    const noSpaces = document.getElementById('noSpaces').checked;
+    const noSpecialChars = document.getElementById('noSpecialChars').checked;
 
-  generateButton.addEventListener('click', () => {
-    const length = parseInt(document.getElementById('lengthInput').value);
-    const removePunct = document.getElementById('removePunct').checked;
-    const removeSpace = document.getElementById('removeSpace').checked;
-
-    if (isNaN(length) || length <= 0) {
-      showFeedback('Please enter a valid positive number for length', 'error');
-      clearTextarea();
-    } else {
-      document.getElementById('resultText').value = window.generateLoremIpsum(
-        length,
-        removeSpace,
-        removePunct
-      );
+    if (isNaN(size) || size <= 0) {
+      showFeedback('Please enter a valid number', 'error');
+      return;
     }
+
+    generatedText.value = window.generateLoremIpsum(size, noSpaces, noSpecialChars);
   });
 
-  copyButton.addEventListener('click', copyToClipboard);
+  copyBtn.addEventListener('click', () => {
+    if (!generatedText.value) {
+      showFeedback('No text to copy', 'error');
+      return;
+    }
+    copyToClipboard(generatedText.value);
+  });
+
+  // Initialize tabs
+  initializeTabs();
+  initializeMiscTab();
+
+  // Initialize counter functionality
+  const counterText = document.getElementById('counterText');
+  counterText?.addEventListener('input', updateCounterStats);
+
+  document.getElementById('password-length').addEventListener('input', (e) => {
+    document.getElementById('length-value').textContent = e.target.value;
+  });
+
+  // Initialize theme toggle
+  initializeTheme();
 });
 
 function initializeTabs() {
@@ -33,74 +47,71 @@ function initializeTabs() {
 
   tabButtons.forEach(button => {
     button.addEventListener('click', () => {
-      // Remove active class from all buttons and contents
       tabButtons.forEach(btn => btn.classList.remove('active'));
       tabContents.forEach(content => content.classList.remove('active'));
 
-      // Add active class to clicked button and corresponding content
       button.classList.add('active');
-      const tabId = button.getAttribute('data-tab');
-      document.getElementById(tabId).classList.add('active');
+      const targetId = button.getAttribute('data-tab');
+      document.getElementById(targetId).classList.add('active');
     });
   });
 }
 
-function initializeCharacterCounter() {
-  const counterText = document.getElementById('counterText');
-  const characterCount = document.getElementById('characterCount');
-
-  function updateCount() {
-    const text = counterText.value;
-    const chars = text.length;
-    const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
-    const lines = text.trim() === '' ? '-' : text.split('\n').length;
-
-    characterCount.textContent = 
-      `Characters: ${chars} | Words: ${words} | Lines: ${lines}`;
-  }
-
-  counterText.addEventListener('input', updateCount);
-  // Initialize with empty state
-  updateCount();
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text)
+    .then(() => showFeedback('Copied to clipboard!'))
+    .catch(() => showFeedback('Failed to copy', 'error'));
 }
 
-// Clear textarea when the popup is shown
-chrome.runtime.onConnect.addListener(function (port) {
-  if (port.name === 'popup') {
-    clearTextarea();
-  }
-});
-
-function copyToClipboard() {
-  const resultText = document.getElementById('resultText').value;
-  if (!resultText.trim()) {
-    showFeedback('No text to copy', 'error');
-    return;
-  }
-  navigator.clipboard
-    .writeText(resultText)
-    .then(() => showFeedback('Copied to clipboard!', 'success'))
-    .catch((err) => {
-      console.error('Failed to copy: ', err);
-      showFeedback('Failed to copy to clipboard', 'error');
-    });
+function showFeedback(message, type = 'success') {
+  const alert = document.getElementById('copyAlert');
+  alert.textContent = message;
+  alert.className = `alert ${type}`;
+  alert.style.display = 'block';
+  setTimeout(() => alert.style.display = 'none', 2000);
 }
 
-function showFeedback(message, type) {
-  const feedbackElement = document.createElement('div');
-  feedbackElement.textContent = message;
-  feedbackElement.className = `feedback ${type}`;
-  document.body.appendChild(feedbackElement);
+function updateCounterStats() {
+  const text = document.getElementById('counterText').value;
+  const stats = {
+    characters: text.length,
+    words: text.trim() ? text.trim().split(/\s+/).length : 0,
+    lines: text ? text.split('\n').length : 0,
+    spaces: text.match(/\s/g)?.length || 0
+  };
 
-  setTimeout(() => {
-    feedbackElement.remove();
-  }, 3000);
+  const counterStats = document.getElementById('characterCount');
+  counterStats.innerHTML = `
+    <div class="stat-item">
+      <div class="stat-value">${stats.characters}</div>
+      <div class="stat-label">Characters</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">${stats.words}</div>
+      <div class="stat-label">Words</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">${stats.lines}</div>
+      <div class="stat-label">Lines</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">${stats.spaces}</div>
+      <div class="stat-label">Spaces</div>
+    </div>
+  `;
 }
 
-// Function to clear the textarea
-function clearTextarea() {
-  const resultText = document.getElementById('resultText');
-  if (resultText) {
-    resultText.value = '';
-  }
+function initializeTheme() {
+  const themeToggle = document.getElementById('themeToggle');
+  const savedTheme = localStorage.getItem('theme') || 'light';
+
+  // We set data-theme on <body> to match our final CSS approach
+  document.body.setAttribute('data-theme', savedTheme);
+  themeToggle.checked = savedTheme === 'dark';
+
+  themeToggle.addEventListener('change', () => {
+    const newTheme = themeToggle.checked ? 'dark' : 'light';
+    document.body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  });
 }

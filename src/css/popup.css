@@ -1,234 +1,498 @@
-:root {
-  --primary-color: #2196F3;
-  --secondary-color: #90CAF9;
-  --background-color: #FFFFFF;
-  --text-color: #333333;
-  --border-color: #E0E0E0;
-  --shadow-color: rgba(0, 0, 0, 0.1);
-  --radius: 8px;
-  --spacing: 16px;
+/* ---------------------------------------------------------------
+   THEME VARIABLES 
+   Using data-theme attributes for Light & Dark
+   (matching your JS: body.setAttribute('data-theme', 'light'/'dark')
+--------------------------------------------------------------- */
+
+/* Default (light) */
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --text-primary: #18181b;
+  --border-color: #e5e7eb;
+  --button-bg: #18181b;
+  --button-text: #ffffff;
 }
 
+/* Dark */
+[data-theme="dark"] {
+  --bg-primary: #18181b;
+  --text-primary: #ffffff;
+  --border-color: #27272a;
+  --button-bg: #3f3f46;
+  --button-text: #ffffff;
+}
+
+/* ---------------------------------------------------------------
+   BASE STYLES
+--------------------------------------------------------------- */
 body {
-  width: 350px;
+  width: 400px;
   margin: 0;
-  margin-top: 10px;
-  padding: 12px;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-/* Remove global font smoothing and apply selectively */
-* {
-  -webkit-font-smoothing: auto;
-  -moz-osx-font-smoothing: auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .app-container {
+  position: relative;
+  width: 90%;
+  padding: 5px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing);
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
 }
 
 h1 {
-  font-size: 16px;
-  font-weight: 500;
-  text-align: center;
-  margin: 0 0 var(--spacing);
-  color: var(--text-color);
-  letter-spacing: -0.02em;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-size: 24px;
+  margin: 0 0 20px;
 }
 
-/* Tabs */
-.tabs {
+/* ---------------------------------------------------------------
+   MAIN TABS (Generate / Counter / Misc)
+--------------------------------------------------------------- */
+.tab-group {
   display: flex;
-  gap: 8px;
-  margin-bottom: var(--spacing);
+  background: #f4f4f5;
+  border-radius: 8px;
+  padding: 4px;
+  margin-bottom: 20px;
 }
 
 .tab-button {
   flex: 1;
-  padding: 10px;
+  padding: 8px 16px;
   border: none;
-  background: var(--secondary-color);
-  color: var(--text-color);
-  border-radius: var(--radius);
+  background: none;
+  color: #71717a;
+  border-radius: 6px;
   cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  letter-spacing: -0.01em;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  transition: all 0.2s;
+  text-align: center;
 }
 
 .tab-button.active {
-  background: var(--primary-color);
-  color: white;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-/* Content Areas */
-.tab-content {
-  display: none;
-  flex-direction: column;
-  gap: var(--spacing);
-}
-
-.tab-content.active {
+/* ---------------------------------------------------------------
+   INPUT SECTION
+--------------------------------------------------------------- */
+.input-row {
   display: flex;
-}
-
-/* Form Elements */
-.input-group {
-  display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 12px;
+  margin-bottom: 16px;
+  justify-content: center;
 }
 
-input[type="number"],
-input[type="text"],
-select,
+.number-input {
+  width: 100px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.generate-button {
+  padding: 8px 16px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.generate-button:hover {
+  opacity: 0.9;
+}
+
+/* ---------------------------------------------------------------
+   CHECKBOXES
+--------------------------------------------------------------- */
+.checkbox-group {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 16px;
+  justify-content: center;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+/* ---------------------------------------------------------------
+   TEXTAREAS
+--------------------------------------------------------------- */
 textarea {
   width: 100%;
   padding: 12px;
   border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  background: white;
+  border-radius: 8px;
   font-size: 14px;
-  box-sizing: border-box;
-  -webkit-font-smoothing: auto;
-  -moz-osx-font-smoothing: auto;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-}
-
-textarea {
-  min-height: 120px;
-  resize: vertical;
   font-family: inherit;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  box-sizing: border-box;
+  margin-bottom: 16px;
 }
 
-/* Checkboxes and Radio Buttons */
-.checkbox-wrapper,
-.radio-wrapper {
+.result-text {
+  height: 200px;
+}
+
+/* ---------------------------------------------------------------
+   COPY BUTTON
+--------------------------------------------------------------- */
+.copy-button {
+  width: 100%;
+  padding: 8px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.copy-button:hover {
+  background: #f4f4f5;
+}
+
+/* ---------------------------------------------------------------
+   MISC TABS (Email / Name / Address / Password)
+--------------------------------------------------------------- */
+.misc-tabs {
+  display: flex;
+  justify-content: space-between;
+  background: #f4f4f5;
+  border-radius: 8px;
+  padding: 4px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.misc-tab {
+  flex: 1;
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  color: #71717a;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+  text-align: center;
+}
+
+.misc-tab.active {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* ---------------------------------------------------------------
+   MISC CONTENT
+--------------------------------------------------------------- */
+.misc-content {
+  display: none;
+  padding: 20px;
+  background: #f4f4f5;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.misc-content.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding-bottom: 8px;
+}
+
+/* Input + button alignment inside misc tabs */
+.misc-content input,
+.misc-content input-group,
+.misc-content textarea,
+.misc-content select,
+.misc-content button {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 12px;
+  text-align: center;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding-bottom: 8px;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.flex-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+/* Radio group */
+.radio-group {
+  display: flex;
+  flex-direction: column; 
+  gap: 8px;
+  margin-bottom: 16px;
+  background: var(--bg-primary);
+  border-radius: 6px;
+  width: 100%;
+  max-width: 300px;
+  padding: 8px;
+}
+
+.radio-label {
   display: flex;
   align-items: center;
   gap: 8px;
-  cursor: pointer;
 }
 
-/* Buttons */
-.primary-button,
-.secondary-button {
-  width: 90%;
-  padding: 10px;
-  border: none;
-  border-radius: var(--radius);
-  font-weight: 500;
-  align-self: start;
-  /* center the button! */
-  margin: 0 auto;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: ui-sans-serif, system-ui, -apple-system, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
-  letter-spacing: -0.01em;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+#address-result {
+  height: 80px;
+  resize: none;
 }
 
-.primary-button {
-  background: var(--primary-color);
-  color: white;
+/* ---------------------------------------------------------------
+   COUNTER TAB
+--------------------------------------------------------------- */
+#counterText {
+  height: 200px;
+  margin-bottom: 16px;
 }
 
-.secondary-button {
-  background: var(--secondary-color);
-  color: var(--text-color);
-}
-
-/* Counter Stats */
 .counter-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #f4f4f5;
+  border-radius: 8px;
+  min-height: 80px;
+  justify-content: center;
+  align-items: center;
+}
+
+.stat-item {
+  flex: 1;
+  min-width: 120px;
   text-align: center;
-  font-size: 14px;
-  color: var(--text-color);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Option Groups */
-.option-group {
-  display: none;
-  gap: 12px;
-  padding: 12px;
-  background: #F5F5F5;
-  border-radius: var(--radius);
+.stat-value {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
 }
 
-/* Feedback Messages */
-.feedback {
+.stat-label {
+  font-size: 12px;
+  color: #71717a;
+}
+
+/* 
+   Center inputs, improve spacing
+*/
+input[type="text"],
+input[type="number"],
+textarea {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.input-row {
+  justify-content: center;
+}
+
+.misc-tabs {
+  display: flex;
+  justify-content: center;
+}
+
+/* ---------------------------------------------------------------
+   LINKS
+--------------------------------------------------------------- */
+.links {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.link {
+  padding: 8px 16px;
+  color: var(--text-primary);
+  text-decoration: none;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+.link:hover {
+  background: #f4f4f5;
+}
+
+/* ---------------------------------------------------------------
+   ALERT (Copied to Clipboard)
+--------------------------------------------------------------- */
+.alert {
   position: fixed;
-  bottom: 20px;
   left: 50%;
+  bottom: 20px;
   transform: translateX(-50%);
-  padding: 12px 24px;
-  border-radius: var(--radius);
-  background: var(--primary-color);
-  color: white;
-  font-weight: 500;
-  box-shadow: 0 2px 8px var(--shadow-color);
-  animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-  from { transform: translate(-50%, 20px); opacity: 0; }
-  to { transform: translate(-50%, 0); opacity: 1; }
-}
-
-/* Enhanced Retina Display Support */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  body {
-    font-size: 14px;
-  }
-  
-  input, select, textarea {
-    font-size: 16px;
-  }
-
-  .tab-button {
-    font-weight: 500;
-  }
-
-  textarea {
-    line-height: 1.5;
-  }
-}
-
-/* Specific text rendering for UI elements */
-h1, 
-.tab-button, 
-.primary-button, 
-.secondary-button,
-.checkbox-label,
-.radio-label,
-.counter-stats {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  letter-spacing: -0.01em;
-}
-
-/* Input and textarea specific rendering */
-input, select, textarea {
-  -webkit-font-smoothing: auto;
-  -moz-osx-font-smoothing: auto;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-size: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 1000;
+  text-align: center;
+  min-width: 200px;
+  pointer-events: none;
+  animation: fadeIn 0.2s ease-out;
+  display: none; /* hide by default */
 }
 
-.tab-button, .primary-button, .secondary-button {
-  font-family: ui-sans-serif, system-ui, -apple-system, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
-  letter-spacing: -0.01em;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.alert.success {
+  border-left: 4px solid #22c55e;
+}
+.alert.error {
+  border-left: 4px solid #ef4444;
+}
+
+/* ---------------------------------------------------------------
+   TAB VISIBILITY
+   By default, hidden. Show with .active.
+--------------------------------------------------------------- */
+.tab-content,
+.misc-content {
+  display: none;
+}
+
+.tab-content.active,
+.misc-content.active {
+  display: block;
+}
+
+/* ---------------------------------------------------------------
+   PASSWORD SLIDER
+--------------------------------------------------------------- */
+#password-length {
+  width: 100%;
+  /*slider styling*/
+  -webkit-appearance: none;
+  appearance: none;
+  height: 20px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity .2s;
+  margin: 8px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Domain select (Email) */
+.domain-select {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* 
+   THEME TOGGLE SWITCH 
+   If you're using the "toggle-switch" custom checkbox
+*/
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px; bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+input:checked + .toggle-slider {
+  background-color: #4CAF50;
+}
+input:checked + .toggle-slider:before {
+  transform: translateX(26px);
 }

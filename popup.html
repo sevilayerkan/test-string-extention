@@ -4,84 +4,136 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="src/css/popup.css" />
-    <title>Test String Generator</title>
+    <title>Text Tools</title>
   </head>
   <body>
     <div class="app-container">
-      <h1>Test String Generator</h1>
+      <h1>Text Tools</h1>
       
-      <div class="tabs">
-        <button class="tab-button active" data-tab="generator">Generator</button>
+      <div class="theme-toggle">
+        <span class="sun-icon">☀️</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="themeToggle">
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="moon-icon">🌙</span>
+      </div> 
+
+      <div class="tab-group">
+        <button class="tab-button active" data-tab="generate">Generate</button>
         <button class="tab-button" data-tab="counter">Counter</button>
         <button class="tab-button" data-tab="misc">Misc</button>
       </div>
 
-      <div id="generator" class="tab-content active">
-        <div class="input-group">
-          <input type="number" id="lengthInput" placeholder="Text Length" min="1" max="100000">
-          
-          <label class="checkbox-wrapper">
-            <input type="checkbox" id="removePunct">
-            <span class="checkbox-label">Remove Punctuation</span>
+      <div id="generate" class="tab-content active">
+        <div class="input-row">
+          <label>Characters:</label>
+          <input type="number" id="character-size" value="1000" class="number-input">
+          <button id="generateBtn" class="generate-button">Generate Text</button>
+        </div>
+
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="noSpaces">
+            <span>No Spaces</span>
           </label>
-          
-          <label class="checkbox-wrapper">
-            <input type="checkbox" id="removeSpace">
-            <span class="checkbox-label">Remove Spaces</span>
+          <label class="checkbox-label">
+            <input type="checkbox" id="noSpecialChars">
+            <span>No Special Characters</span>
           </label>
         </div>
 
-        <button id="generateButton" class="primary-button">Generate Text</button>
-        <textarea id="resultText" readonly placeholder="Generated text will appear here..."></textarea>
-        <button id="copyButton" class="secondary-button">Copy to Clipboard</button>
+        <textarea id="generatedText" class="result-text" placeholder="Generated text will appear here..."></textarea>
+        <button id="copyBtn" class="copy-button">Copy to Clipboard</button>
       </div>
 
       <div id="counter" class="tab-content">
-        <textarea id="counterText" placeholder="Enter or paste your text here..."></textarea>
-        <div id="characterCount" class="counter-stats">
-          Characters: 0 | Words: 0 | Lines: 0
+        <textarea id="counterText" placeholder="Type or paste your text here..."></textarea>
+        <div id="characterCount" class="counter-stats"></div>
+        <div class="links">
+          <a href="https://buymeacoffee.com/notdepressedeveloper" target="_blank" class="link">
+            ☕ Buy Me a Coffee
+          </a>
+          <a href="https://github.com/sevilayerkan/test-string-extention" target="_blank" class="link">
+            📦 GitHub
+          </a>
         </div>
       </div>
 
       <div id="misc" class="tab-content">
-        <select id="dataType" class="select-input">
-          <option value="">Select Data Type</option>
-          <option value="name">Full Name</option>
-          <option value="email">Email</option>
-          <option value="address">Address</option>
-          <option value="password">Password</option>
-        </select>
-
-        <div id="nameOptions" class="option-group">
-          <label class="radio-wrapper">
-            <input type="radio" name="gender" value="male" checked>
-            <span class="radio-label">Male</span>
-          </label>
-          <label class="radio-wrapper">
-            <input type="radio" name="gender" value="female">
-            <span class="radio-label">Female</span>
-          </label>
+        <div class="misc-tabs">
+          <button class="misc-tab active" data-misc-tab="email">Email</button>
+          <button class="misc-tab" data-misc-tab="name">Name</button>
+          <button class="misc-tab" data-misc-tab="address">Address</button>
+          <button class="misc-tab" data-misc-tab="password">Password</button>
         </div>
 
-        <div id="emailOptions" class="option-group">
-          <select id="emailDomain" class="select-input">
-            <option value="random">Random Domain</option>
-            <option value="example.com">example.com</option>
-            <option value="test.com">test.com</option>
-            <option value="custom">Custom Domain</option>
-          </select>
-          <input type="text" id="customDomain" class="text-input" placeholder="Enter custom domain">
+        <!-- Email Generator Tab -->
+        <div id="email-tab" class="misc-content active">
+          <div class="input-group">
+            <label for="custom-domain">Domain:</label>
+            <select id="custom-domain" class="domain-select">
+              <option value="">Random Domain</option>
+              <option value="gmail.com">gmail.com</option>
+              <option value="hotmail.com">hotmail.com</option>
+              <option value="yahoo.com">yahoo.com</option>
+              <option value="outlook.com">outlook.com</option>
+            </select>
+            <button id="generate-email" class="generate-button flex-item">Generate Email</button>
+            <input type="text" id="email-result" readonly>
+            <button class="copy-button flex-item" data-copy="email-result">Copy to Clipboard</button>
+          </div>
+          
         </div>
 
-        <button id="generateMiscButton" class="primary-button">Generate</button>
-        <textarea id="miscResultText" readonly placeholder="Generated data will appear here..."></textarea>
-        <button id="copyMiscButton" class="secondary-button">Copy to Clipboard</button>
+        <!-- Name Generator Tab -->
+        <div id="name-tab" class="misc-content flex-column">
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="gender" value="any" checked>
+              <span>Any</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="gender" value="male">
+              <span>Male</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="gender" value="female">
+              <span>Female</span>
+            </label>
+          </div>
+          <button id="generate-name" class="generate-button">Generate Name</button>
+          <input type="text" id="name-result" readonly>
+          <button class="copy-button" data-copy="name-result">Copy to Clipboard</button>
+        </div>
+
+        <!-- Address Generator Tab -->
+        <div id="address-tab" class="misc-content">
+          <button id="generate-address" class="generate-button">Generate Address</button>
+          <textarea id="address-result" readonly></textarea>
+          <button class="copy-button" data-copy="address-result">Copy to Clipboard</button>
+        </div>
+
+        <!-- Password Generator Tab -->
+        <div id="password-tab" class="misc-content">
+          <div class="input-group">
+            <label for="password-length">Password Length: <span id="length-value">12</span></label>
+            <input type="range" id="password-length" min="8" max="32" value="12">
+          </div>
+          <button id="generate-password" class="generate-button">Generate Password</button>
+          <input type="text" id="password-result" readonly>
+          <button class="copy-button" data-copy="password-result">Copy to Clipboard</button>
+        </div>
       </div>
     </div>
 
-    <script src="src/js/func.js"></script>
+    <div id="copyAlert" class="alert success" style="display: none;">
+      Copied to clipboard!
+    </div>
+
     <script src="src/js/copy.js"></script>
-    <script src="src/js/popup.js"></script>
+    <script src="src/js/func.js"></script>
     <script src="src/js/misc.js"></script>
+    <script src="src/js/popup.js"></script>
   </body>
 </html>

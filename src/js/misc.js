@@ -3,115 +3,160 @@ let DATA = {
   maleNames: [],
   femaleNames: [],
   surnames: [],
-  emails: [],
   addresses: [],
   passwords: []
 };
 
-// Load all JSON data
 async function loadData() {
   try {
-    const [maleNames, femaleNames, surnames, emails, addresses, passwords] = await Promise.all([
-      fetch('data/maleFirstName.json').then(r => r.json()),
-      fetch('data/femaleFirstName.json').then(r => r.json()),
-      fetch('data/surname.json').then(r => r.json()),
-      fetch('data/email.json').then(r => r.json()),
-      fetch('data/address.json').then(r => r.json()),
-      fetch('data/password.json').then(r => r.json())
+    const response = await Promise.all([
+      fetch('data/maleFirstName.json'),
+      fetch('data/femaleFirstName.json'),
+      fetch('data/surname.json'),
+      fetch('data/address.json'),
+      fetch('data/password.json')
     ]);
+
+    const [maleNames, femaleNames, surnames, addresses, passwords] = 
+      await Promise.all(response.map(r => r.json()));
 
     DATA = {
       maleNames,
       femaleNames,
       surnames,
-      emails,
       addresses,
       passwords
     };
+    return true;
   } catch (error) {
     console.error('Error loading data:', error);
-    showFeedback('Error loading data', 'error');
+    showFeedback('Error loading data. Please try again.', 'error');
+    return false;
   }
-}
-
-function getRandomItem(array) {
-  return array[Math.floor(Math.random() * array.length)];
-}
-
-function generateFullName(gender) {
-  const nameArray = gender === 'male' ? DATA.maleNames : DATA.femaleNames;
-  const firstName = getRandomItem(nameArray);
-  const surname = getRandomItem(DATA.surnames);
-  return `${firstName} ${surname}`;
-}
-
-function generateEmail(domainType, customDomain) {
-  if (domainType === 'random') {
-    return getRandomItem(DATA.emails);
-  }
-  
-  const name = generateFullName(Math.random() > 0.5 ? 'male' : 'female')
-    .toLowerCase()
-    .replace(' ', '.');
-  
-  const domain = domainType === 'custom' ? customDomain : domainType;
-  return `${name}@${domain}`;
 }
 
 function initializeMiscTab() {
-  loadData();
+  const miscTabs = document.querySelectorAll('.misc-tab');
+  const miscContents = document.querySelectorAll('.misc-content');
+
+  // Hide all except first misc content
+  miscContents.forEach((content, index) => {
+    if (index !== 0) {
+      content.style.display = 'none';
+    }
+  });
+
+  // Tab switching
+  miscTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Remove active class from all tabs
+      miscTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      // Hide all contents and show the selected one
+      const targetId = `${tab.getAttribute('data-misc-tab')}-tab`;
+      miscContents.forEach(content => {
+        content.style.display = content.id === targetId ? 'block' : 'none';
+      });
+    });
+  });
+
+  // Initialize generators and copy buttons
+  document.getElementById('generate-email')?.addEventListener('click', generateEmail);
+  document.getElementById('generate-name')?.addEventListener('click', generateName);
+  document.getElementById('generate-address')?.addEventListener('click', generateAddress);
+  document.getElementById('generate-password')?.addEventListener('click', generatePassword);
+
+  // Initialize copy buttons
+  document.querySelectorAll('.copy-button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const inputId = btn.getAttribute('data-copy');
+      const text = document.getElementById(inputId)?.value;
+      if (text) copyToClipboard(text);
+    });
+  });
+
+  // Initialize password length slider
+  const lengthSlider = document.getElementById('password-length');
+  const lengthValue = document.getElementById('length-value');
   
-  const dataType = document.getElementById('dataType');
-  const nameOptions = document.getElementById('nameOptions');
-  const emailOptions = document.getElementById('emailOptions');
-  const emailDomain = document.getElementById('emailDomain');
-  const customDomain = document.getElementById('customDomain');
-  const generateButton = document.getElementById('generateMiscButton');
-  const copyButton = document.getElementById('copyMiscButton');
-  const resultText = document.getElementById('miscResultText');
-
-  dataType.addEventListener('change', () => {
-    nameOptions.style.display = dataType.value === 'name' ? 'block' : 'none';
-    emailOptions.style.display = dataType.value === 'email' ? 'block' : 'none';
+  lengthSlider.addEventListener('input', () => {
+    lengthValue.textContent = lengthSlider.value;
+    generatePassword();
   });
 
-  emailDomain.addEventListener('change', () => {
-    customDomain.style.display = emailDomain.value === 'custom' ? 'block' : 'none';
+  // Load initial data
+  loadData().then(() => {
+    generatePassword();
   });
+}
 
-  generateButton.addEventListener('click', () => {
-    let result = '';
-    
-    switch (dataType.value) {
-      case 'name':
-        const gender = document.querySelector('input[name="gender"]:checked').value;
-        result = generateFullName(gender);
-        break;
-      case 'email':
-        result = generateEmail(emailDomain.value, customDomain.value);
-        break;
-      case 'address':
-        result = getRandomItem(DATA.addresses);
-        break;
-      case 'password':
-        result = getRandomItem(DATA.passwords);
-        break;
-      default:
-        showFeedback('Please select a data type', 'error');
-        return;
+function generateEmail() {
+  const domain = document.getElementById('custom-domain').value.trim();
+  const firstName = DATA.maleNames[Math.floor(Math.random() * DATA.maleNames.length)].toLowerCase();
+  const lastName = DATA.surnames[Math.floor(Math.random() * DATA.surnames.length)].toLowerCase();
+  
+  const domains = ['gmail.com', 'hotmail.com', 'yahoo.com', 'outlook.com'];
+  const selectedDomain = domain || domains[Math.floor(Math.random() * domains.length)];
+  
+  const emailFormats = [
+    `${firstName}.${lastName}@${selectedDomain}`,
+    `${firstName}${lastName}@${selectedDomain}`,
+    `${firstName}_${lastName}@${selectedDomain}`,
+    `${firstName}${Math.floor(Math.random() * 100)}@${selectedDomain}`
+  ];
+  
+  document.getElementById('email-result').value = emailFormats[Math.floor(Math.random() * emailFormats.length)];
+}
+
+function generateName() {
+  const gender = document.querySelector('input[name="gender"]:checked').value;
+  let firstName;
+  
+  if (gender === 'male') {
+    firstName = DATA.maleNames[Math.floor(Math.random() * DATA.maleNames.length)];
+  } else if (gender === 'female') {
+    firstName = DATA.femaleNames[Math.floor(Math.random() * DATA.femaleNames.length)];
+  } else {
+    const names = [...DATA.maleNames, ...DATA.femaleNames];
+    firstName = names[Math.floor(Math.random() * names.length)];
+  }
+  
+  const lastName = DATA.surnames[Math.floor(Math.random() * DATA.surnames.length)];
+  document.getElementById('name-result').value = `${firstName} ${lastName}`;
+}
+
+function generateAddress() {
+  const addresses = DATA.addresses;
+  if (addresses && addresses.length > 0) {
+    document.getElementById('address-result').value = addresses[Math.floor(Math.random() * addresses.length)];
+  } else {
+    document.getElementById('address-result').value = 'Atatürk Cad. No:123\nİstanbul, Türkiye';
+  }
+}
+
+function generatePassword() {
+  const length = parseInt(document.getElementById('password-length').value) || 12;
+  
+  // Use provided password data if available
+  if (DATA.passwords && DATA.passwords.length > 0) {
+    let password = DATA.passwords[Math.floor(Math.random() * DATA.passwords.length)];
+    while (password.length < length) {
+      password += DATA.passwords[Math.floor(Math.random() * DATA.passwords.length)];
     }
+    document.getElementById('password-result').value = password.substring(0, length);
+    return;
+  }
+  
+  // Fallback to generated password
+  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
+  let password = '';
+  for (let i = 0; i < length; i++) {
+    password += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  document.getElementById('password-result').value = password;
+}
 
-    resultText.value = result;
-  });
-
-  copyButton.addEventListener('click', () => {
-    if (!resultText.value) {
-      showFeedback('No text to copy', 'error');
-      return;
-    }
-    
-    navigator.clipboard.writeText(resultText.value)
-      .then(() => showFeedback('Copied to clipboard!', 'success'))
-      .catch(() => showFeedback('Failed to copy to clipboard', 'error'));
-  });
+function generateRandomString(length) {
+  return Math.random().toString(36).substring(2, length + 2);
 }
