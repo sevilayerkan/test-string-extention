@@ -1,0 +1,181 @@
+You are an expert software architect tasked with creating comprehensive rules for Cursor AI to follow when working with test-string-extension. Also look at the PRD.md file for more information. Update the progress.md file with the latest information.
+
+# Cursor AI Rules for chrome-data-extention
+
+## Project Overview
+A modern chromium based test data generator that can generate specific-length strings, Lorem Ipsum text, or randomized data, this tool is designed with simplicity and efficiency in mind. Key features are Modernized UI, Tabbed Navigation, Miscellaneous Tools Section Room for future expansions and added utilities, For now it supports Turkish name, address, email, and password generation, Dark Mode, Character counter, random text generation with/out puncuation, spaces
+
+Text String Generator is a powerful and versatile Chrome browser extension designed to assist developers and testers by generating customizable test text data. Whether you need specific-length strings, Lorem Ipsum text, or randomized data, this tool is designed with simplicity and efficiency in mind.
+
+With the latest update, the extension includes a modernized, tabbed interface for seamless navigation, Dark Mode support, and a Miscellaneous section for generating Turkish names, addresses, and passwords. Optimized for security and memory usage, this extension ensures smooth performance without compromising functionality.
+
+Once installed, the extension works completely offline, allowing users to continue using all features without an active internet connection.
+
+### Features
+- Modernized UI: Redesigned with a sleek, scalable, and responsive interface.
+- Tabbed Navigation: Added a tabbed layout for better organization of features.
+- Miscellaneous Tools Section: Room for future expansions and added utilities. For now it supports Turkish name, address, email, and password generation.
+- Dark Mode Support (Upcoming): Switch between light and dark modes for a better user experience.
+- Character Counter: Real-time character counter to track text length dynamically.
+- Random Text Generation: Generate customizable random strings with options for uppercase letters, numbers, and symbols.
+- Offline Functionality: Full functionality without requiring an internet or AI connection.
+
+## Project Context
+This document defines the rules and guidelines for Cursor AI when working with chrome-data-extention.
+
+### Technical Stack
+- Platform: web
+- Framework: next
+- Key Dependencies:
+
+- tailwind-next
+
+- shadcn-next
+
+
+## Code Generation Rules
+
+### 1. Project Structure
+Follow these directory and file organization rules:
+- Maintain the established project structure
+- Place components in appropriate directories
+- Follow file naming conventions
+- Respect module boundaries
+- Keep related files together
+- Follow the required chrome extension project structure
+- Follow the chrome extention policies
+- Performance: Data generation must occur under 200ms.
+- Security: No external data collection or API dependencies.
+- Accessibility: Ensure full keyboard navigation support.
+- Internationalization: Support Turkish language settings.
+- Compliance: Adhere to Chrome Web Store extension guidelines.
+- Browser Support: Google Chrome (latest 3 versions).
+
+### 2. Code Style
+Adhere to these formatting rules:
+- Use consistent indentation
+- Follow line length limits
+- Apply proper spacing
+- Use appropriate brackets
+- Maintain consistent naming
+- Follow best practices
+- Follow the test driven development approach
+- Follow the clean code principles
+- Follow the SOLID principles
+- Performance: Data generation must occur under 200ms.
+- Security: No external data collection or API dependencies.
+- Accessibility: Ensure full keyboard navigation support.
+- Internationalization: Support Turkish language settings.
+- Compliance: Adhere to Chrome Web Store extension guidelines.
+- Browser Support: Google Chrome (latest 3 versions).
+
+### 3. Component Guidelines
+When generating components:
+- Follow component composition patterns
+- Implement proper prop typing
+- Use appropriate state management
+- Handle errors correctly
+- Implement proper event handling
+- Follow lifecycle best practices
+- Optimize rendering performance
+
+### 4. Type System
+For JavaScript implementation:
+- Use strict type checking
+- Create proper interfaces
+- Implement generics correctly
+- Handle null/undefined properly
+- Use type guards when needed
+- Document complex types
+- Avoid any type
+
+### 5. API Integration
+When working with APIs:
+- Follow RESTful conventions
+- Implement proper error handling
+- Use type-safe requests
+- Handle authentication correctly
+- Validate API responses
+- Document API usage
+- Implement proper caching
+
+### 6. State Management
+For managing application state:
+- Use appropriate state solutions
+- Follow immutability principles
+- Implement proper actions/reducers
+- Handle side effects correctly
+- Optimize state updates
+- Document state structure
+- Implement proper selectors
+
+### 7. Testing Requirements
+Generate tests following these rules:
+- Write comprehensive unit tests
+- Implement integration tests
+- Follow testing best practices
+- Use proper mocking
+- Test error scenarios
+- Maintain test coverage
+- Document test cases
+
+### 8. Security Guidelines
+Enforce security practices:
+- Validate all inputs
+- Sanitize data output
+- Handle authentication properly
+- Protect sensitive data
+- Follow OWASP guidelines
+- Implement proper CORS
+- Use secure dependencies
+- No external data collection or API dependencies.
+
+### 9. Performance Rules
+Optimize for performance:
+- Implement code splitting
+- Use lazy loading
+- Optimize bundle size
+- Minimize re-renders
+- Use proper caching
+- Optimize assets
+- Follow performance best practices
+- Data generation must occur under 200ms.
+- Security: No external data collection or API dependencies.
+- Browser Support: Google Chrome (latest 3 versions).
+
+### 10. Documentation
+Generate documentation that:
+- Is clear and concise
+- Includes JSDoc comments
+- Provides usage examples
+- Documents edge cases
+- Explains complex logic
+- Includes type information
+- Follows documentation standards
+
+
+
+
+## Best Practices
+
+### 1. Code Quality
+- Write self-documenting code
+- Keep functions small and focused
+- Follow DRY principles
+- Use meaningful names
+- Implement proper error handling
+- Write maintainable code
+
+### 2. Performance
+- Optimize bundle size
+- Implement code splitting
+- Use proper caching
+- Optimize rendering
+- Follow lazy loading patterns
+
+### 3. Security
+- Validate user input
+- Sanitize data output
+- Use proper authentication
+- Protect sensitive data
+- Follow security best practices
