@@ -232,3 +232,70 @@ input, select, textarea {
   font-family: ui-sans-serif, system-ui, -apple-system, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
   letter-spacing: -0.01em;
 }
+
+/* Support Links */
+.support-links {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+}
+
+.support-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: #f8f9fa;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.support-link:hover {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.support-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Buy Me a Coffee specific styling */
+.support-link:first-child {
+  background: #ffdd00;
+  border-color: #ffdd00;
+  color: #000;
+}
+
+.support-link:first-child:hover {
+  background: #ffd700;
+  border-color: #ffd700;
+  color: #000;
+}
+
+/* GitHub specific styling */
+.support-link:last-child {
+  background: #24292e;
+  border-color: #24292e;
+  color: white;
+}
+
+.support-link:last-child:hover {
+  background: #2f363d;
+  border-color: #2f363d;
+  color: white;
+}
