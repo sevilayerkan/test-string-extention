@@ -1,5 +1,11 @@
 # Text String Generator Chrome Extension
 
+## 🚀 Stable Release
+
+For the most stable and fully tested version, [**download the latest release here**](https://github.com/sevilayerkan/test-string-extention/releases/tag/v0.2.0-alpha).
+
+> **Note:** The `main` branch is pre-production and may include features under development. For production use, always prefer the latest release above.
+
 ## Project Details
 
 Text String Generator is a powerful and versatile Chrome browser extension designed to assist developers and testers by generating customizable test text data. Whether you need specific-length strings, Lorem Ipsum text, or randomized data, this tool is designed with simplicity and efficiency in mind. 
@@ -17,6 +23,7 @@ Follow these steps to install and use the Test String Generator Chrome extension
 1- Download the Extension Files:
 
 - Download the HTML, CSS, JS, and manifest.json files from this repository.
+- If you want to use fully stable version please download files from release - add link  https://github.com/sevilayerkan/test-string-extention/releases/tag/v0.2.0-alpha
 
 2- Set Up the Extension:
 
@@ -74,6 +81,12 @@ If you like this project and want to support its development, you can **[Buy Me 
 
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support-yellow?style=for-the-badge&logo=buy-me-a-coffee)](https://buymeacoffee.com/notdepressedeveloper)
 
+## 🧪 Tested Platforms
+
+- **Google Chrome:** Version 138.0.7204.101 (arm64)
+- **Opera One:** Version 120.0.5543.61 (arm64)
+  - Chromium version: 135.0.7049.115
+  
 ## Contributing and Contact
 
 Contributions are welcome! If you encounter any issues or have suggestions for improvements, please feel free to:
