@@ -1,0 +1,31 @@
+# Privacy Policy for Test String Generator
+
+## Data Collection
+This extension does NOT collect, store, or transmit any personal data or user information.
+
+## What We Don't Do
+- We don't collect any personal information
+- We don't track your browsing history
+- We don't store any data on our servers
+- We don't use cookies or tracking technologies
+- We don't share any information with third parties
+
+## How It Works
+- All data generation happens locally in your browser
+- No internet connection is required
+- All data is stored locally in the extension
+- No external API calls are made
+
+## Permissions
+The extension requests minimal permissions:
+- activeTab: To interact with the current tab
+- clipboardRead/clipboardWrite: To copy generated text
+- storage: To save user preferences (locally)
+- fontSettings: To access font settings
+- scripting: To inject scripts when needed
+- tabs: To access tab information
+
+## Contact
+If you have any questions about privacy, contact: notdepressedeveloper (Discord)
+
+Last updated: 14 July 2025
