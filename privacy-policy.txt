@@ -20,10 +20,6 @@ This extension does NOT collect, store, or transmit any personal data or user in
 The extension requests minimal permissions:
 - activeTab: To interact with the current tab
 - clipboardRead/clipboardWrite: To copy generated text
-- storage: To save user preferences (locally)
-- fontSettings: To access font settings
-- scripting: To inject scripts when needed
-- tabs: To access tab information
 
 ## Contact
 If you have any questions about privacy, contact: notdepressedeveloper (Discord)
