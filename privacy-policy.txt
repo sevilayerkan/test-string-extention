@@ -24,4 +24,4 @@ The extension requests minimal permissions:
 ## Contact
 If you have any questions about privacy, contact: notdepressedeveloper (Discord)
 
-Last updated: 14 July 2025
+Last updated: 16 July 2025
