@@ -18,11 +18,7 @@
   "permissions": [
     "activeTab",
     "clipboardRead",
-    "clipboardWrite",
-    "storage",
-    "fontSettings",
-    "scripting",
-    "tabs"
+    "clipboardWrite"
   ],
   "background": {
     "service_worker": "background.js"
