@@ -1,5 +1,13 @@
 # Text String Generator Chrome Extension
 
+## 🛒 Install from Chrome Web Store
+
+The extension is now available on the Chrome Web Store! [**Install it directly from here**](<CHROME_WEB_STORE_URL_PLACEHOLDER>)
+
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/<CHROME_WEB_STORE_ID>?style=for-the-badge&logo=google-chrome)](<CHROME_WEB_STORE_URL_PLACEHOLDER>)
+
+> **Recommended:** For the easiest and most up-to-date experience, install via the Chrome Web Store link above.
+
 ## 🚀 Stable Release
 
 For the most stable and fully tested version, [**download the latest release here**](https://github.com/sevilayerkan/test-string-extention/releases/tag/v0.2.0-alpha).
@@ -16,9 +24,13 @@ Once installed, the extension works completely offline, allowing users to contin
 
 ## Installation
 
-Follow these steps to install and use the Test String Generator Chrome extension or download repo into your computer and open html file in your favorite chromium based browser:
+### Preferred: Install from Chrome Web Store
 
-### For installing as Chrome extention:
+1. Go to the [Chrome Web Store listing](<CHROME_WEB_STORE_URL_PLACEHOLDER>).
+2. Click "Add to Chrome" and follow the prompts.
+3. The extension icon will appear in your Chrome toolbar after installation.
+
+### Manual Installation (for development or advanced users):
 
 1- Download the Extension Files:
 
@@ -86,7 +98,7 @@ If you like this project and want to support its development, you can **[Buy Me 
 - **Google Chrome:** Version 138.0.7204.101 (arm64)
 - **Opera One:** Version 120.0.5543.61 (arm64)
   - Chromium version: 135.0.7049.115
-  
+
 ## Contributing and Contact
 
 Contributions are welcome! If you encounter any issues or have suggestions for improvements, please feel free to:
