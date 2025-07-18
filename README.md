@@ -2,9 +2,9 @@
 
 ## 🛒 Install from Chrome Web Store
 
-The extension is now available on the Chrome Web Store! [**Install it directly from here**](<CHROME_WEB_STORE_URL_PLACEHOLDER>)
+The extension is now available on the Chrome Web Store! [**Install it directly from here**](<https://chromewebstore.google.com/detail/test-string-generator/dncchfcbdengdgodhbjmakoaiildjigl?authuser=0&hl=tr>)
 
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/<CHROME_WEB_STORE_ID>?style=for-the-badge&logo=google-chrome)](<CHROME_WEB_STORE_URL_PLACEHOLDER>)
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/dncchfcbdengdgodhbjmakoaiildjigl?style=for-the-badge&logo=google-chrome)](<https://chromewebstore.google.com/detail/test-string-generator/dncchfcbdengdgodhbjmakoaiildjigl?authuser=0&hl=tr>)
 
 > **Recommended:** For the easiest and most up-to-date experience, install via the Chrome Web Store link above.
 
