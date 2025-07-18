@@ -299,3 +299,32 @@ input, select, textarea {
   border-color: #2f363d;
   color: white;
 }
+/* Dark theme styles */
+body.dark-theme {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-theme textarea,
+body.dark-theme input,
+body.dark-theme select,
+body.dark-theme button {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  border-color: #333;
+}
+
+body.dark-theme .tab-button.active {
+  background-color: #333;
+  color: #eee;
+}
+
+/* Adjust feedback messages if needed */
+.feedback.success {
+  background-color: #4caf50;
+  color: white;
+}
+.feedback.error {
+  background-color: #f44336;
+  color: white;
+}
