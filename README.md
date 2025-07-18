@@ -22,6 +22,9 @@ With the latest update, the extension includes a modernized, tabbed interface fo
 
 Once installed, the extension works completely offline, allowing users to continue using all features without an active internet connection.
 
+> For quick demo please click here
+<img src="https://github.com/user-attachments/assets/cdfbb4df-f148-4ab2-bc51-e5199f01368a" width="250" height="350"/>
+
 ## Installation
 
 ### Preferred: Install from Chrome Web Store
