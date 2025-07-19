@@ -10,7 +10,7 @@ The extension is now available on the Chrome Web Store! [**Install it directly f
 
 ## 🚀 Stable Release
 
-For the most stable and fully tested version, [**download the latest release here**](https://github.com/sevilayerkan/test-string-extention/releases/tag/1.0.1).
+For the most stable and fully tested version, [**download the latest release here**](https://github.com/sevilayerkan/test-string-extention/releases/tag/v0.2.0-alpha).
 
 > **Note:** The `main` branch is pre-production and may include features under development. For production use, always prefer the latest release above.
 

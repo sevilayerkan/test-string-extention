@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
   "name": "Test String Generator",
-  "version": "1.0.0",
-  "description": "A lightweight Chrome extension designed for test data generation and Turkish localization.",
+  "version": "1.1.0",
+  "description": "A lightweight Chrome extension designed for test data generation and multi-language localization.",
+  "update_url": "https://clients2.google.com/service/update2/crx",
   "icons": {
       "16": "assets/icon16.png",
       "32": "assets/icon32.png",
@@ -18,8 +19,14 @@
   "permissions": [
     "activeTab",
     "clipboardRead",
-    "clipboardWrite"
+    "clipboardWrite",
+    "storage",
+    "notifications"
   ],
+  "web_accessible_resources": [{
+    "resources": ["data/*.json"],
+    "matches": ["<all_urls>"]
+  }],
   "background": {
     "service_worker": "background.js"
   }

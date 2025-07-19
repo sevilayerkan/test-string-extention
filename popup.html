@@ -1,102 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="src/css/popup.css" />
-    <title>Test String Generator</title>
-  </head>
-  <body>
-    <div class="app-container">
-      <h1>Test String Generator</h1>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test String Generator</title>
+  <link rel="stylesheet" href="src/css/popup.css">
+</head>
+<body>
+  <div class="app-container">
+    <div class="app-content">
+      <!-- Header with Settings -->
+      <header class="app-header">
+        <h1 data-i18n="app-title">Test String Generator</h1>
+        <button id="settingsButton" class="settings-button" aria-label="Settings" title="Settings">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+          </svg>
+        </button>
+      </header>
       
       <div class="tabs">
-        <button class="tab-button active" data-tab="generator">Generator</button>
-        <button class="tab-button" data-tab="counter">Counter</button>
-        <button class="tab-button" data-tab="misc">Misc</button>
+        <button class="tab-button active" data-tab="generator" data-i18n="tab-generator">Generator</button>
+        <button class="tab-button" data-tab="counter" data-i18n="tab-counter">Counter</button>
+        <button class="tab-button" data-tab="misc" data-i18n="tab-misc">Misc</button>
       </div>
 
       <div id="generator" class="tab-content active">
-        <div class="input-group">
-          <input type="number" id="lengthInput" placeholder="Text Length" min="1" max="999999">
+        <div class="option-group active">
+          <div class="length-input-container">
+            <input type="number" id="lengthInput" data-i18n-placeholder="placeholder-length" placeholder="Text Length" min="1" max="999999" value="1">
+            <div class="unit-toggle">
+              <button type="button" id="unitToggle" class="unit-toggle-btn" data-unit="characters">
+                <span class="unit-label" data-i18n="unit-characters">Characters</span>
+                <svg class="toggle-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M7 14l5-5 5 5z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
           
-          <label class="checkbox-wrapper">
-            <input type="checkbox" id="removePunct">
-            <span class="checkbox-label">Remove Punctuation</span>
-          </label>
-          
-          <label class="checkbox-wrapper">
-            <input type="checkbox" id="removeSpace">
-            <span class="checkbox-label">Remove Spaces</span>
-          </label>
+          <div class="checkbox-row">
+            <label class="checkbox-wrapper">
+              <input type="checkbox" id="removePunct">
+              <span class="checkbox-label" data-i18n="label-remove-punct">Remove Punctuation</span>
+            </label>
+            
+            <label class="checkbox-wrapper">
+              <input type="checkbox" id="removeSpace">
+              <span class="checkbox-label" data-i18n="label-remove-space">Remove Spaces</span>
+            </label>
+          </div>
         </div>
 
-        <button id="generateButton" class="primary-button">Generate Text</button>
-        <textarea id="resultText" readonly placeholder="Generated text will appear here..."></textarea>
-        <button id="copyButton" class="secondary-button">Copy to Clipboard</button>
+        <button id="generateButton" class="primary-button" data-i18n="btn-generate">Generate Text</button>
+        <textarea id="resultText" readonly data-i18n-placeholder="placeholder-result" placeholder="Generated text will appear here..."></textarea>
+        <button id="copyButton" class="secondary-button" data-i18n="btn-copy">Copy to Clipboard</button>
       </div>
 
       <div id="counter" class="tab-content">
-        <textarea id="counterText" placeholder="Enter or paste your text here..."></textarea>
+        <textarea id="counterText" data-i18n-placeholder="placeholder-counter" placeholder="Enter or paste your text here..."></textarea>
         <div id="characterCount" class="counter-stats">
-          Characters: 0 | Words: 0 | Lines: 0
-        </div>
-        
-        <div class="support-links">
-          <a href="https://buymeacoffee.com/notdepressedeveloper" target="_blank" class="support-link">
-            <svg class="support-icon" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zM20 8h-2V5h2v3zM4 19h16v2H4z"/>
-            </svg>
-            Buy Me a Coffee
-          </a>
-          <a href="https://github.com/sevilayerkan/test-string-extention" target="_blank" class="support-link">
-            <svg class="support-icon" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-            </svg>
-            GitHub
-          </a>
+          <div class="stats-row">
+            <span class="stat-item">
+              <span class="stat-label" data-i18n="stats-chars">Characters</span>
+              <span class="stat-value" id="charCount">0</span>
+            </span>
+            <span class="stat-item">
+              <span class="stat-label" data-i18n="stats-words">Words</span>
+              <span class="stat-value" id="wordCount">0</span>
+            </span>
+          </div>
+          <div class="stats-row">
+            <span class="stat-item">
+              <span class="stat-label" data-i18n="stats-lines">Lines</span>
+              <span class="stat-value" id="lineCount">0</span>
+            </span>
+            <span class="stat-item">
+              <span class="stat-label" data-i18n="stats-sentences">Sentences</span>
+              <span class="stat-value" id="sentenceCount">0</span>
+            </span>
+            <span class="stat-item">
+              <span class="stat-label" data-i18n="stats-paragraphs">Paragraphs</span>
+              <span class="stat-value" id="paragraphCount">0</span>
+            </span>
+          </div>
         </div>
       </div>
 
       <div id="misc" class="tab-content">
-        <select id="dataType" class="select-input">
-          <option value="">Select Data Type</option>
-          <option value="name">Full Name</option>
-          <option value="email">Email</option>
-          <option value="address">Address</option>
-          <option value="password">Password</option>
+        <select id="dataTypeSelect" class="data-type-select">
+          <option value="" data-i18n="select-data-type">Select Data Type</option>
+          <option value="name" data-i18n="option-name">Full Name</option>
+          <option value="email" data-i18n="option-email">Email</option>
+          <option value="address" data-i18n="option-address">Address</option>
+          <option value="password" data-i18n="option-password">Password</option>
         </select>
-
-        <div id="nameOptions" class="option-group">
+        
+        <div id="genderOptions" class="option-group">
           <label class="radio-wrapper">
             <input type="radio" name="gender" value="male" checked>
-            <span class="radio-label">Male</span>
+            <span class="radio-label" data-i18n="gender-male">Male</span>
           </label>
           <label class="radio-wrapper">
             <input type="radio" name="gender" value="female">
-            <span class="radio-label">Female</span>
+            <span class="radio-label" data-i18n="gender-female">Female</span>
           </label>
         </div>
-
+        
         <div id="emailOptions" class="option-group">
-          <select id="emailDomain" class="select-input">
-            <option value="random">Random Domain</option>
+          <select id="domainSelect" class="select-input">
+            <option value="random" data-i18n="domain-random">Random Domain</option>
             <option value="example.com">example.com</option>
             <option value="test.com">test.com</option>
-            <option value="custom">Custom Domain</option>
+            <option value="custom" data-i18n="domain-custom">Custom Domain</option>
           </select>
-          <input type="text" id="customDomain" class="text-input" placeholder="Enter custom domain">
+          <input type="text" id="customDomain" class="text-input" data-i18n-placeholder="placeholder-custom-domain" placeholder="Enter custom domain">
         </div>
 
-        <button id="generateMiscButton" class="primary-button">Generate</button>
-        <textarea id="miscResultText" readonly placeholder="Generated data will appear here..."></textarea>
-        <button id="copyMiscButton" class="secondary-button">Copy to Clipboard</button>
+        <div class="bulk-options">
+          <div class="bulk-row">
+            <label class="bulk-label" data-i18n="bulk-count">Count:</label>
+            <input type="number" id="bulkCount" class="bulk-input" min="1" max="1000" value="1">
+          </div>
+          
+          <div class="bulk-row">
+            <label class="bulk-label" data-i18n="bulk-format">Format:</label>
+            <select id="outputFormat" class="bulk-select">
+              <option value="plain" data-i18n="format-plain">Plain Text</option>
+              <option value="json" data-i18n="format-json">JSON</option>
+              <option value="json-with-id" data-i18n="format-json-id">JSON with ID</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="generateMiscButton" class="primary-button" data-i18n="btn-generate">Generate</button>
+        <textarea id="miscResultText" readonly data-i18n-placeholder="placeholder-result" placeholder="Generated data will appear here..."></textarea>
+        <button id="copyMiscButton" class="secondary-button" data-i18n="btn-copy">Copy to Clipboard</button>
       </div>
     </div>
 
-    <script src="src/js/func.js"></script>
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 data-i18n="settings-title">Settings</h2>
+          <button id="closeSettings" class="close-button" aria-label="Close">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+          <div class="setting-group">
+            <label class="setting-label" data-i18n="setting-theme">Theme</label>
+            <div class="theme-selector">
+              <button id="lightTheme" class="theme-button active" data-theme="light" data-i18n="theme-light">Light</button>
+              <button id="darkTheme" class="theme-button" data-theme="dark" data-i18n="theme-dark">Dark</button>
+            </div>
+          </div>
+
+          <div class="setting-group">
+            <label class="setting-label" data-i18n="setting-language">Language</label>
+            <select id="languageSelect" class="select-input">
+              <option value="en">English</option>
+              <option value="tr">Türkçe</option>
+            </select>
+          </div>
+
+          <div class="setting-group">
+            <label class="setting-label" data-i18n="setting-support">Support</label>
+            <div class="support-links">
+              <a href="https://buymeacoffee.com/notdepressedeveloper" target="_blank" class="support-link">
+                <svg class="support-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zM20 8h-2V5h2v3zM4 19h16v2H4z"/>
+                </svg>
+                <span data-i18n="support-coffee">Buy Me a Coffee</span>
+              </a>
+              <a href="https://github.com/sevilayerkan/test-string-extention" target="_blank" class="support-link">
+                <svg class="support-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span data-i18n="support-github">GitHub</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+      <div class="loading-spinner"></div>
+      <span data-i18n="loading">Loading...</span>
+    </div>
+
+    <script src="src/js/i18n.js"></script>
     <script src="src/js/copy.js"></script>
+    <script src="src/js/func.js"></script>
     <script src="src/js/popup.js"></script>
     <script src="src/js/misc.js"></script>
-  </body>
+    <script src="src/js/settings.js"></script>
+  </div>
+</body>
 </html>
