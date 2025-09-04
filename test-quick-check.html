@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Test Check</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1e1e1e; color: #fff; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 4px; }
+        .pass { background: #2d5a2d; border: 1px solid #4CAF50; }
+        .fail { background: #5a2d2d; border: 1px solid #f44336; }
+        .info { background: #2d2d5a; border: 1px solid #2196F3; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Test Hızlı Kontrol</h1>
+    <div id="results"></div>
+
+    <script src="src/js/func.js"></script>
+    <script>
+        const results = document.getElementById('results');
+        
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `result ${type}`;
+            div.textContent = message;
+            results.appendChild(div);
+        }
+
+        function quickCheck() {
+            log('🚀 Hızlı test kontrolü başlıyor...', 'info');
+            
+            try {
+                // Test 1: Check if functions exist
+                if (typeof generateLoremIpsum === 'function') {
+                    log('✅ generateLoremIpsum function exists', 'pass');
+                } else {
+                    log('❌ generateLoremIpsum function missing', 'fail');
+                }
+
+                if (typeof generateAlphanumerical === 'function') {
+                    log('✅ generateAlphanumerical function exists', 'pass');
+                } else {
+                    log('❌ generateAlphanumerical function missing', 'fail');
+                }
+
+                if (typeof generateWithSpecialChars === 'function') {
+                    log('✅ generateWithSpecialChars function exists', 'pass');
+                } else {
+                    log('❌ generateWithSpecialChars function missing', 'fail');
+                }
+
+                if (typeof generateWithTurkishGerman === 'function') {
+                    log('✅ generateWithTurkishGerman function exists', 'pass');
+                } else {
+                    log('❌ generateWithTurkishGerman function missing', 'fail');
+                }
+
+                // Test 2: Check CHARACTER_SETS
+                if (typeof CHARACTER_SETS === 'object' && CHARACTER_SETS.ALPHABETICAL) {
+                    log('✅ CHARACTER_SETS is accessible', 'pass');
+                } else {
+                    log('❌ CHARACTER_SETS is not accessible', 'fail');
+                }
+
+                // Test 3: Test basic functionality
+                const lorem = generateLoremIpsum(50, false, false);
+                if (lorem && lorem.length === 50) {
+                    log(`✅ Lorem Ipsum: "${lorem.substring(0, 30)}..." (${lorem.length} chars)`, 'pass');
+                } else {
+                    log('❌ Lorem Ipsum generation failed', 'fail');
+                }
+
+                const alphanum = generateAlphanumerical(30);
+                if (alphanum && alphanum.length === 30 && /^[a-zA-Z0-9]+$/.test(alphanum)) {
+                    log(`✅ Alphanumerical: "${alphanum}" (${alphanum.length} chars)`, 'pass');
+                } else {
+                    log('❌ Alphanumerical generation failed', 'fail');
+                }
+
+                const special = generateWithSpecialChars(30);
+                if (special && special.length === 30) {
+                    log(`✅ Special Chars: "${special.substring(0, 30)}" (${special.length} chars)`, 'pass');
+                } else {
+                    log('❌ Special chars generation failed', 'fail');
+                }
+
+                const turkish = generateWithTurkishGerman(30);
+                if (turkish && turkish.length === 30) {
+                    log(`✅ Turkish/German: "${turkish.substring(0, 30)}" (${turkish.length} chars)`, 'pass');
+                } else {
+                    log('❌ Turkish/German generation failed', 'fail');
+                }
+
+                // Test 4: Character set contents
+                if (CHARACTER_SETS.ALPHABETICAL.includes('a') && CHARACTER_SETS.ALPHABETICAL.includes('Z')) {
+                    log('✅ Alphabetical character set is correct', 'pass');
+                } else {
+                    log('❌ Alphabetical character set has issues', 'fail');
+                }
+
+                if (CHARACTER_SETS.NUMERICAL.includes('0') && CHARACTER_SETS.NUMERICAL.includes('9')) {
+                    log('✅ Numerical character set is correct', 'pass');
+                } else {
+                    log('❌ Numerical character set has issues', 'fail');
+                }
+
+                if (CHARACTER_SETS.SPECIAL_CHARS.includes(',') && CHARACTER_SETS.SPECIAL_CHARS.includes('(')) {
+                    log('✅ Special character set is correct', 'pass');
+                } else {
+                    log('❌ Special character set has issues', 'fail');
+                }
+
+                if (CHARACTER_SETS.TURKISH_GERMAN.includes('ç') && CHARACTER_SETS.TURKISH_GERMAN.includes('ö')) {
+                    log('✅ Turkish/German character set is correct', 'pass');
+                } else {
+                    log('❌ Turkish/German character set has issues', 'fail');
+                }
+
+                log('🎯 Hızlı kontrol tamamlandı!', 'info');
+
+            } catch (error) {
+                log(`❌ Test error: ${error.message}`, 'fail');
+                console.error('Test error:', error);
+            }
+        }
+
+        // Run quick check on load
+        window.onload = quickCheck;
+    </script>
+</body>
+</html>

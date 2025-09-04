@@ -3,12 +3,14 @@ document.addEventListener('DOMContentLoaded', function () {
   initializeTabs();
   initializeCharacterCounter();
   initializeMiscTab();
+  initializeTextTypeControls();
 
   const generateButton = document.getElementById('generateButton');
   const copyButton = document.getElementById('copyButton');
 
   generateButton.addEventListener('click', () => {
     const length = parseInt(document.getElementById('lengthInput').value);
+    const textType = document.querySelector('input[name="textType"]:checked').value;
     const removePunct = document.getElementById('removePunct').checked;
     const removeSpace = document.getElementById('removeSpace').checked;
 
@@ -19,11 +21,26 @@ document.addEventListener('DOMContentLoaded', function () {
       showFeedback('Maximum length is 999,999 characters', 'error');
       clearTextarea();
     } else {
-      document.getElementById('resultText').value = window.generateLoremIpsum(
-        length,
-        removeSpace,
-        removePunct
-      );
+      let generatedText;
+      
+      switch (textType) {
+        case 'lorem':
+          generatedText = window.generateLoremIpsum(length, removeSpace, removePunct);
+          break;
+        case 'alphanumerical':
+          generatedText = window.generateAlphanumerical(length);
+          break;
+        case 'specialChars':
+          generatedText = window.generateWithSpecialChars(length);
+          break;
+        case 'turkishGerman':
+          generatedText = window.generateWithTurkishGerman(length);
+          break;
+        default:
+          generatedText = window.generateLoremIpsum(length, removeSpace, removePunct);
+      }
+      
+      document.getElementById('resultText').value = generatedText;
     }
   });
 
@@ -101,6 +118,22 @@ function showFeedback(message, type) {
 }
 
 // Function to clear the textarea
+function initializeTextTypeControls() {
+  const textTypeRadios = document.querySelectorAll('input[name="textType"]');
+  const loremOptions = document.getElementById('loremOptions');
+
+  function toggleLoremOptions() {
+    const selectedType = document.querySelector('input[name="textType"]:checked').value;
+    loremOptions.style.display = selectedType === 'lorem' ? 'block' : 'none';
+  }
+
+  textTypeRadios.forEach(radio => {
+    radio.addEventListener('change', toggleLoremOptions);
+  });
+
+  toggleLoremOptions();
+}
+
 function clearTextarea() {
   const resultText = document.getElementById('resultText');
   if (resultText) {

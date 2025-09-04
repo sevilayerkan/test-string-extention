@@ -60,19 +60,36 @@ Once installed, the extension works completely offline, allowing users to contin
 
 ## Usage
 
+### Text Generation
+
 1. Click on the extension icon to open the popup.
-2. Enter the desired text length for generation.
-3. Use the following options to customize the text:
+2. Select your desired text generation type:
+   - **Lorem Ipsum**: Traditional placeholder text
+   - **Alphanumerical**: Letters and numbers only (abc123)
+   - **With Special Characters**: Includes symbols (,()%/+?*...)
+   - **Turkish/German Letters**: Includes international characters (ö,ç,ş,ü...)
+3. Enter the desired text length for generation (1-999,999 characters).
+4. For Lorem Ipsum, use additional options:
    - **Remove Punctuation**: Exclude punctuation marks from the generated text.
    - **Remove Spaces**: Remove spaces between words.
-4. Use the **Character Counter** to see the real-time length of the given text.
-5. Navigate to the **Miscellaneous** tab for additional tools:
+5. Click "Generate Text" to create the customized text.
+6. Copy the generated text to the clipboard using the "Copy to Clipboard" button.
+
+### Additional Features
+
+7. Use the **Character Counter** tab to see the real-time length of any text.
+8. Navigate to the **Miscellaneous** tab for additional tools:
    - Generate **Turkish Names** for use in test scenarios.
-   - Generate **Email Adresses** for use in test scenarios.
+   - Generate **Email Addresses** for use in test scenarios.
    - Create **Turkish Addresses** for testing localization.
    - Generate secure **Passwords** for test accounts or other needs.
-6. Click "Generate" to create the customized text.
-7. Copy the generated text to the clipboard using the "Copy to Clipboard" button.
+
+### Testing
+
+The extension includes comprehensive testing features:
+- Open `test-all.html` for the complete test suite
+- Open `test-generation.html` for manual testing
+- Run `npm test` from command line
 
 ## Honorable Mentions
 
@@ -82,12 +99,34 @@ Special thanks to my friend’s repository for its inspiration and usage:
 
 ## Features
 
+### Text Generation Types
+
+- **Lorem Ipsum** - Traditional placeholder text with customizable options
+  - Remove punctuation option
+  - Remove spaces option
+
+- **Alphanumerical (abc123)** - Random combination of letters and numbers
+  - No spaces included
+  - Perfect for testing IDs, codes, usernames
+
+- **With Special Characters (,()%/+?*...)** - Text including special symbols
+  - Includes letters, numbers, and special characters
+  - Useful for testing form validation, security
+
+- **Turkish/German Letters (ö,ç,ş,ü...)** - Text with international characters
+  - Turkish characters: ç, ğ, ı, ö, ş, ü, Ç, Ğ, I, Ö, Ş, Ü
+  - German characters: ä, ö, ü, ß, Ä, Ö, Ü
+  - Perfect for internationalization testing
+
+### General Features
+
 - **Modernized UI**: Redesigned with a sleek, scalable, and responsive interface.
 - **Tabbed Navigation**: Added a tabbed layout for better organization of features.
 - **Miscellaneous Tools Section**: Room for future expansions and added utilities. For now it supports Turkish name, address, email, and password generation.
 - **Dark Mode Support** (Upcoming): Switch between light and dark modes for a better user experience. 
 - **Character Counter**: Real-time character counter to track text length dynamically.
 - **Random Text Generation**: Generate customizable random strings with options for uppercase letters, numbers, and symbols.
+- **Comprehensive Testing**: Includes extensive test suite for reliability
 - **Offline Functionality**: Full functionality without requiring an internet or AI connection.
 
 ## Support

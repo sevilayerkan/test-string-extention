@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Generation Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .test-output {
+            background: #f5f5f5;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 3px;
+            word-break: break-all;
+        }
+        button {
+            background: #007cba;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #005a87;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text Generation Test</h1>
+    
+    <div class="test-section">
+        <h3>Alphanumerical Text (abc123)</h3>
+        <button onclick="testAlphanumerical()">Generate 50 chars</button>
+        <div id="alphanumerical-output" class="test-output">Click generate to test...</div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Text with Special Characters (,()%/+?*...)</h3>
+        <button onclick="testSpecialChars()">Generate 50 chars</button>
+        <div id="special-chars-output" class="test-output">Click generate to test...</div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Turkish/German Letters (ö,ç,ş,ü...)</h3>
+        <button onclick="testTurkishGerman()">Generate 50 chars</button>
+        <div id="turkish-german-output" class="test-output">Click generate to test...</div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Original Lorem Ipsum</h3>
+        <button onclick="testLorem()">Generate 100 chars</button>
+        <div id="lorem-output" class="test-output">Click generate to test...</div>
+    </div>
+
+    <script src="src/js/func.js"></script>
+    <script>
+        function testAlphanumerical() {
+            const result = generateAlphanumerical(50);
+            document.getElementById('alphanumerical-output').textContent = result;
+            console.log('Alphanumerical test:', result);
+        }
+
+        function testSpecialChars() {
+            const result = generateWithSpecialChars(50);
+            document.getElementById('special-chars-output').textContent = result;
+            console.log('Special chars test:', result);
+        }
+
+        function testTurkishGerman() {
+            const result = generateWithTurkishGerman(50);
+            document.getElementById('turkish-german-output').textContent = result;
+            console.log('Turkish/German test:', result);
+        }
+
+        function testLorem() {
+            const result = generateLoremIpsum(100, false, false);
+            document.getElementById('lorem-output').textContent = result;
+            console.log('Lorem ipsum test:', result);
+        }
+
+        // Auto-run tests on page load
+        window.onload = function() {
+            console.log('Running automatic tests...');
+            testAlphanumerical();
+            testSpecialChars();
+            testTurkishGerman();
+            testLorem();
+        };
+    </script>
+</body>
+</html>

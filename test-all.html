@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Generation - Complete Test Suite</title>
+    <style>
+        body {
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin: 20px;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            line-height: 1.4;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            color: white;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #2d2d2d;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        .console-output {
+            background-color: #000;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 600px;
+            overflow-y: auto;
+            border: 1px solid #333;
+            margin: 10px 0;
+        }
+        .run-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+        .run-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .run-button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .status.running {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .test-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background-color: #2d2d2d;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #444;
+        }
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .stat-label {
+            color: #aaa;
+            margin-top: 5px;
+        }
+        .sample-output {
+            background-color: #2d2d2d;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #444;
+            max-height: 200px;
+            overflow-y: auto;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🧪 Text Generation Test Suite</h1>
+        <p>Kapsamlı test paketı - Metin üretim özelliklerinin doğruluğunu test eder</p>
+    </div>
+
+    <div class="test-section">
+        <h3>🚀 Test Kontrolleri</h3>
+        <button id="runAllTests" class="run-button">Tüm Testleri Çalıştır</button>
+        <button id="runFuncTests" class="run-button">Fonksiyon Testleri</button>
+        <button id="runUITests" class="run-button">UI Testleri</button>
+        <button id="runPerfTests" class="run-button">Performans Testleri</button>
+        <button id="clearOutput" class="run-button" style="background: #e74c3c;">Çıktıyı Temizle</button>
+        
+        <div id="testStatus" class="status" style="display: none;"></div>
+    </div>
+
+    <div class="test-stats" id="testStats" style="display: none;">
+        <div class="stat-card">
+            <div class="stat-number" id="totalTests">0</div>
+            <div class="stat-label">Toplam Test</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="passedTests">0</div>
+            <div class="stat-label">Başarılı</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="failedTests">0</div>
+            <div class="stat-label">Başarısız</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="successRate">0%</div>
+            <div class="stat-label">Başarı Oranı</div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h3>📊 Test Çıktısı</h3>
+        <div id="consoleOutput" class="console-output">Test sonuçları burada görünecek...</div>
+    </div>
+
+    <div class="test-section">
+        <h3>📝 Örnek Üretimler</h3>
+        <div>
+            <h4>Alfanumerik (abc123):</h4>
+            <div id="sampleAlphanumerical" class="sample-output">Örnek yükleniyor...</div>
+        </div>
+        <div>
+            <h4>Özel Karakterler (,()%/+?*...):</h4>
+            <div id="sampleSpecialChars" class="sample-output">Örnek yükleniyor...</div>
+        </div>
+        <div>
+            <h4>Türkçe/Almanca Harfler (ö,ç,ş,ü...):</h4>
+            <div id="sampleTurkishGerman" class="sample-output">Örnek yükleniyor...</div>
+        </div>
+        <div>
+            <h4>Lorem Ipsum:</h4>
+            <div id="sampleLorem" class="sample-output">Örnek yükleniyor...</div>
+        </div>
+    </div>
+
+    <!-- Load the source files -->
+    <script src="src/js/func.js"></script>
+    
+    <!-- Load test files -->
+    <script src="tests/test-runner.js"></script>
+    <script src="tests/func-tests.js"></script>
+    <script src="tests/ui-tests.js"></script>
+    <script src="tests/performance-tests.js"></script>
+
+    <script>
+        let originalConsoleLog = console.log;
+        let consoleOutput = document.getElementById('consoleOutput');
+        
+        // Override console.log to capture output
+        console.log = function(...args) {
+            originalConsoleLog.apply(console, args);
+            const message = args.join(' ');
+            consoleOutput.textContent += message + '\n';
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        };
+
+        function updateStatus(message, type) {
+            const status = document.getElementById('testStatus');
+            status.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+        }
+
+        function updateStats(results) {
+            document.getElementById('testStats').style.display = 'grid';
+            document.getElementById('totalTests').textContent = results.total;
+            document.getElementById('passedTests').textContent = results.passed;
+            document.getElementById('failedTests').textContent = results.failed;
+            document.getElementById('successRate').textContent = 
+                results.total > 0 ? ((results.passed / results.total) * 100).toFixed(1) + '%' : '0%';
+        }
+
+        function setButtonsEnabled(enabled) {
+            const buttons = document.querySelectorAll('.run-button:not(#clearOutput)');
+            buttons.forEach(btn => btn.disabled = !enabled);
+        }
+
+        async function runTests(testType = 'all') {
+            setButtonsEnabled(false);
+            updateStatus('Testler çalıştırılıyor...', 'running');
+            
+            // Clear previous results
+            testRunner.tests = testRunner.tests || [];
+            testRunner.results = { passed: 0, failed: 0, total: 0 };
+            
+            try {
+                if (testType === 'all' || testType === 'func') {
+                    console.log('📋 Fonksiyon testleri yüklendi ve çalıştırılacak...');
+                }
+                if (testType === 'all' || testType === 'ui') {
+                    console.log('🖼️ UI testleri yüklendi ve çalıştırılacak...');
+                }
+                if (testType === 'all' || testType === 'perf') {
+                    console.log('⚡ Performans testleri yüklendi ve çalıştırılacak...');
+                }
+                
+                await testRunner.runAll();
+                
+                updateStats(testRunner.results);
+                
+                if (testRunner.results.failed === 0) {
+                    updateStatus('✅ Tüm testler başarılı!', 'success');
+                } else {
+                    updateStatus(`⚠️ ${testRunner.results.failed} test başarısız oldu.`, 'error');
+                }
+            } catch (error) {
+                console.log('❌ Test çalıştırma hatası:', error);
+                updateStatus('Test çalıştırma hatası!', 'error');
+            } finally {
+                setButtonsEnabled(true);
+            }
+        }
+
+        function generateSamples() {
+            try {
+                document.getElementById('sampleAlphanumerical').textContent = 
+                    generateAlphanumerical(100);
+                document.getElementById('sampleSpecialChars').textContent = 
+                    generateWithSpecialChars(100);
+                document.getElementById('sampleTurkishGerman').textContent = 
+                    generateWithTurkishGerman(100);
+                document.getElementById('sampleLorem').textContent = 
+                    generateLoremIpsum(100, false, false);
+            } catch (error) {
+                console.log('Örnek üretim hatası:', error);
+            }
+        }
+
+        // Event listeners
+        document.getElementById('runAllTests').addEventListener('click', () => runTests('all'));
+        document.getElementById('runFuncTests').addEventListener('click', () => runTests('func'));
+        document.getElementById('runUITests').addEventListener('click', () => runTests('ui'));
+        document.getElementById('runPerfTests').addEventListener('click', () => runTests('perf'));
+        document.getElementById('clearOutput').addEventListener('click', () => {
+            consoleOutput.textContent = '';
+            document.getElementById('testStatus').style.display = 'none';
+            document.getElementById('testStats').style.display = 'none';
+        });
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            generateSamples();
+            console.log('🎯 Test paketi hazır! Testleri çalıştırmak için butonları kullanın.');
+            console.log(`📚 Toplam ${testRunner.tests.length} test yüklendi.`);
+            console.log('---');
+        });
+
+        // Refresh samples every 10 seconds
+        setInterval(generateSamples, 10000);
+    </script>
+</body>
+</html>

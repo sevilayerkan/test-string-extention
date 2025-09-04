@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console Test Runner</title>
+    <style>
+        body { 
+            font-family: 'Consolas', monospace; 
+            background: #000; 
+            color: #00ff00; 
+            padding: 20px; 
+            margin: 0;
+        }
+        #output { 
+            white-space: pre-wrap; 
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .pass { color: #00ff00; }
+        .fail { color: #ff0000; }
+        .info { color: #00bfff; }
+        .summary { 
+            color: #ffff00; 
+            font-weight: bold; 
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ffff00;
+        }
+    </style>
+</head>
+<body>
+    <div id="output">🧪 TEXT GENERATION TESTS - CONSOLE RUNNER
+=================================================
+
+</div>
+
+    <!-- Load source files -->
+    <script src="src/js/func.js"></script>
+    <script src="tests/test-runner.js"></script>
+
+    <script>
+        const output = document.getElementById('output');
+        
+        // Override console.log to capture output
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const message = args.join(' ');
+            
+            let className = '';
+            if (message.includes('✅')) className = 'pass';
+            else if (message.includes('❌')) className = 'fail';  
+            else if (message.includes('🚀') || message.includes('📊')) className = 'info';
+            
+            const span = document.createElement('span');
+            span.className = className;
+            span.textContent = message + '\n';
+            output.appendChild(span);
+            
+            // Auto scroll to bottom
+            window.scrollTo(0, document.body.scrollHeight);
+        };
+
+        // Custom test runner for console
+        class ConsoleTestRunner {
+            constructor() {
+                this.tests = [];
+                this.results = { passed: 0, failed: 0, total: 0 };
+            }
+
+            test(name, testFn) {
+                this.tests.push({ name, testFn });
+            }
+
+            async runAll() {
+                console.log('🚀 Running all tests...\n');
+                
+                for (const { name, testFn } of this.tests) {
+                    this.results.total++;
+                    
+                    try {
+                        await testFn();
+                        console.log(`✅ ${name}`);
+                        this.results.passed++;
+                    } catch (error) {
+                        console.log(`❌ ${name}`);
+                        console.log(`   Error: ${error.message}`);
+                        this.results.failed++;
+                    }
+                }
+
+                this.printSummary();
+            }
+
+            printSummary() {
+                const summary = document.createElement('div');
+                summary.className = 'summary';
+                summary.innerHTML = `
+📊 TEST SUMMARY
+===============
+Total Tests: ${this.results.total}
+Passed: ${this.results.passed}
+Failed: ${this.results.failed}
+Success Rate: ${((this.results.passed / this.results.total) * 100).toFixed(1)}%
+
+${this.results.failed === 0 ? '🎉 ALL TESTS PASSED!' : '⚠️  Some tests failed'}
+                `;
+                output.appendChild(summary);
+            }
+
+            // Assertion methods
+            assert(condition, message) {
+                if (!condition) {
+                    throw new Error(message || 'Assertion failed');
+                }
+            }
+
+            assertEqual(actual, expected, message) {
+                if (actual !== expected) {
+                    throw new Error(message || `Expected ${expected}, but got ${actual}`);
+                }
+            }
+
+            assertTrue(condition, message) {
+                this.assert(condition === true, message || 'Expected true');
+            }
+
+            assertFalse(condition, message) {
+                this.assert(condition === false, message || 'Expected false');
+            }
+
+            assertContains(str, substring, message) {
+                this.assert(str.includes(substring), message || `Expected "${str}" to contain "${substring}"`);
+            }
+
+            assertMatch(str, regex, message) {
+                this.assert(regex.test(str), message || `Expected "${str}" to match ${regex}`);
+            }
+
+            assertLength(item, expectedLength, message) {
+                const actualLength = typeof item === 'string' ? item.length : (item && item.length !== undefined ? item.length : 0);
+                this.assertEqual(actualLength, expectedLength, message || `Expected length ${expectedLength}, got ${actualLength}`);
+            }
+        }
+
+        const runner = new ConsoleTestRunner();
+
+        // Add essential tests
+        runner.test('CHARACTER_SETS accessibility', () => {
+            runner.assert(typeof CHARACTER_SETS === 'object', 'CHARACTER_SETS should be accessible');
+            runner.assertContains(CHARACTER_SETS.ALPHABETICAL, 'a', 'Should contain lowercase a');
+            runner.assertContains(CHARACTER_SETS.NUMERICAL, '0', 'Should contain digit 0');
+        });
+
+        runner.test('generateLoremIpsum basic functionality', () => {
+            const result = generateLoremIpsum(50, false, false);
+            runner.assertLength(result, 50, 'Should return exact length');
+            runner.assertContains(result.toLowerCase(), 'lorem', 'Should contain lorem');
+        });
+
+        runner.test('generateAlphanumerical basic functionality', () => {
+            const result = generateAlphanumerical(30);
+            runner.assertLength(result, 30, 'Should return exact length');
+            runner.assertMatch(result, /^[a-zA-Z0-9]+$/, 'Should contain only alphanumerical');
+        });
+
+        runner.test('generateWithSpecialChars basic functionality', () => {
+            const result = generateWithSpecialChars(30);
+            runner.assertLength(result, 30, 'Should return exact length');
+        });
+
+        runner.test('generateWithTurkishGerman basic functionality', () => {
+            const result = generateWithTurkishGerman(30);
+            runner.assertLength(result, 30, 'Should return exact length');
+        });
+
+        runner.test('Edge case - length 1', () => {
+            runner.assertLength(generateLoremIpsum(1, false, false), 1, 'Lorem ipsum length 1');
+            runner.assertLength(generateAlphanumerical(1), 1, 'Alphanumerical length 1');
+        });
+
+        runner.test('Large text generation', () => {
+            const result = generateAlphanumerical(1000);
+            runner.assertLength(result, 1000, 'Should handle large lengths');
+            runner.assertMatch(result, /[a-zA-Z]/, 'Should contain letters');
+            runner.assertMatch(result, /[0-9]/, 'Should contain numbers');
+        });
+
+        runner.test('Text randomness', () => {
+            const result1 = generateAlphanumerical(50);
+            const result2 = generateAlphanumerical(50);
+            runner.assertFalse(result1 === result2, 'Results should be different');
+        });
+
+        runner.test('Performance - small text speed', () => {
+            const start = performance.now();
+            for (let i = 0; i < 100; i++) {
+                generateAlphanumerical(100);
+            }
+            const end = performance.now();
+            const avgTime = (end - start) / 100;
+            
+            console.log(`   Average generation time: ${avgTime.toFixed(3)}ms`);
+            runner.assertTrue(avgTime < 5, `Should be fast (< 5ms), got ${avgTime.toFixed(3)}ms`);
+        });
+
+        runner.test('Character distribution test', () => {
+            const result = generateAlphanumerical(5000);
+            const letterCount = (result.match(/[a-zA-Z]/g) || []).length;
+            const numberCount = (result.match(/[0-9]/g) || []).length;
+            
+            const letterPercentage = (letterCount / result.length) * 100;
+            const numberPercentage = (numberCount / result.length) * 100;
+            
+            console.log(`   Distribution - Letters: ${letterPercentage.toFixed(1)}%, Numbers: ${numberPercentage.toFixed(1)}%`);
+            
+            runner.assertTrue(letterPercentage > 70 && letterPercentage < 95, 
+                `Letter percentage should be 70-95%, got ${letterPercentage.toFixed(1)}%`);
+            runner.assertTrue(numberPercentage > 5 && numberPercentage < 30, 
+                `Number percentage should be 5-30%, got ${numberPercentage.toFixed(1)}%`);
+        });
+
+        // Run tests automatically
+        window.onload = () => {
+            setTimeout(() => {
+                runner.runAll().catch(error => {
+                    console.log('❌ Test runner error:', error);
+                });
+            }, 100);
+        };
+    </script>
+</body>
+</html>

@@ -4,7 +4,8 @@
   "description": "Chrome extension to generate test strings",
   "main": "popup.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Testleri çalıştırmak için test-all.html dosyasını tarayıcıda açın\" && start test-all.html",
+    "test:manual": "echo \"Manuel test için test-generation.html dosyasını açın\" && start test-generation.html",
     "build": "echo \"No build step required\" && exit 0",
     "lint": "eslint *.js",
     "format": "prettier --write *.{js,html,css,json}"
@@ -12,7 +13,11 @@
   "keywords": [
     "chrome-extension",
     "test-string",
-    "lorem-ipsum"
+    "lorem-ipsum",
+    "alphanumerical",
+    "turkish-characters",
+    "german-characters",
+    "special-characters"
   ],
   "author": "sevilayerkan",
   "license": "MIT",

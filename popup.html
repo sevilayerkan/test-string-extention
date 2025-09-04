@@ -20,15 +20,36 @@
         <div class="input-group">
           <input type="number" id="lengthInput" placeholder="Text Length" min="1" max="999999">
           
-          <label class="checkbox-wrapper">
-            <input type="checkbox" id="removePunct">
-            <span class="checkbox-label">Remove Punctuation</span>
-          </label>
+          <div class="text-type-selection">
+            <label class="radio-wrapper">
+              <input type="radio" name="textType" value="lorem" checked>
+              <span class="radio-label">Lorem Ipsum</span>
+            </label>
+            <label class="radio-wrapper">
+              <input type="radio" name="textType" value="alphanumerical">
+              <span class="radio-label">Alphanumerical (abc123)</span>
+            </label>
+            <label class="radio-wrapper">
+              <input type="radio" name="textType" value="specialChars">
+              <span class="radio-label">With Special Chars (,()%/+?*...)</span>
+            </label>
+            <label class="radio-wrapper">
+              <input type="radio" name="textType" value="turkishGerman">
+              <span class="radio-label">Turkish/German Letters (ö,ç,ş,ü...)</span>
+            </label>
+          </div>
           
-          <label class="checkbox-wrapper">
-            <input type="checkbox" id="removeSpace">
-            <span class="checkbox-label">Remove Spaces</span>
-          </label>
+          <div id="loremOptions" class="option-group">
+            <label class="checkbox-wrapper">
+              <input type="checkbox" id="removePunct">
+              <span class="checkbox-label">Remove Punctuation</span>
+            </label>
+            
+            <label class="checkbox-wrapper">
+              <input type="checkbox" id="removeSpace">
+              <span class="checkbox-label">Remove Spaces</span>
+            </label>
+          </div>
         </div>
 
         <button id="generateButton" class="primary-button">Generate Text</button>
