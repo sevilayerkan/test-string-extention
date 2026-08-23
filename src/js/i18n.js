@@ -77,7 +77,7 @@ class I18n {
         'msg-generated': 'Generated successfully!',
         'msg-generation-error': 'Error generating data',
         'msg-invalid-length': 'Please enter a valid positive number for length',
-        'msg-max-length': 'Maximum length is 999,999 characters',
+        'msg-max-length': 'Maximum length is 10,000 characters',
         'msg-select-type': 'Please select a data type',
         'msg-loading-error': 'Error loading data'
       },
@@ -156,7 +156,7 @@ class I18n {
         'msg-generated': 'Başarıyla üretildi!',
         'msg-generation-error': 'Veri üretilirken hata oluştu',
         'msg-invalid-length': 'Lütfen uzunluk için geçerli pozitif bir sayı girin',
-        'msg-max-length': 'Maksimum uzunluk 999.999 karakterdir',
+        'msg-max-length': 'Maksimum uzunluk 10.000 karakterdir',
         'msg-select-type': 'Lütfen bir veri türü seçin',
         'msg-loading-error': 'Veri yükleme hatası'
       }

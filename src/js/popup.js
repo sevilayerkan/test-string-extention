@@ -1,3 +1,5 @@
+const MAX_GENERATION_LENGTH = 10000;
+
 // Enhanced Popup Management System
 class PopupManager {
   constructor() {
@@ -164,9 +166,8 @@ class PopupManager {
       return false;
     }
     
-    const maxLength = 999999;
-    if (length > maxLength) {
-      this.showFeedback(window.i18n?.translate('msg-max-length') || `Length cannot exceed ${maxLength}`, 'error');
+    if (length > MAX_GENERATION_LENGTH) {
+      this.showFeedback(window.i18n?.translate('msg-max-length') || `Length cannot exceed ${MAX_GENERATION_LENGTH}`, 'error');
       return false;
     }
     
@@ -176,7 +177,7 @@ class PopupManager {
   validateLengthInput(input) {
     const value = parseInt(input.value);
     const min = parseInt(input.min) || 1;
-    const max = parseInt(input.max) || 999999;
+    const max = parseInt(input.max) || MAX_GENERATION_LENGTH;
     
     if (value < min) {
       input.value = min;
