@@ -6,6 +6,7 @@
     generateWithSpecialChars,
     generateWithTurkishGerman,
     generateCustomText,
+    generateLoremWords,
     generateTextByType,
     generatePhone,
     generateUuid,
@@ -52,6 +53,13 @@
     const text = generateLoremIpsum(200, true, false);
     assert(!/\s/.test(text), 'spaces still present');
     assert(text.length === 200, 'length changed after filter');
+  });
+
+  test('generateLoremWords should draw from a varied word pool', () => {
+    const words = generateLoremWords(120, false, true).split(/\s+/);
+    const uniqueWords = new Set(words);
+    assert(words.length === 120, 'expected 120 words');
+    assert(uniqueWords.size >= 50, `word pool too small: ${uniqueWords.size}`);
   });
 
   test('generateAlphanumerical should contain only letters and numbers', () => {
