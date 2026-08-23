@@ -273,14 +273,9 @@ class PopupManager {
     this.elements.tabButtons?.forEach(btn => btn.classList.remove('active'));
     this.elements.tabContents?.forEach(content => content.classList.remove('active'));
     
-    // Add active class to clicked button and corresponding content
     activeButton?.classList.add('active');
     document.getElementById(targetTab)?.classList.add('active');
-    
-    // Clear content when switching tabs
-    this.clearTextarea();
-    
-    // Update character count if switching to counter tab
+
     if (targetTab === 'counter') {
       this.updateCharacterCount();
     }
