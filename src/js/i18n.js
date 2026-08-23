@@ -15,6 +15,10 @@ class I18n {
         
         // Generator
         'placeholder-length': 'Text Length',
+        'type-lorem': 'Lorem Ipsum',
+        'type-alphanumerical': 'Alphanumerical (abc123)',
+        'type-special': 'Special characters',
+        'type-turkish-german': 'Turkish/German letters',
         'unit-characters': 'Characters',
         'unit-words': 'Words',
         'label-remove-punct': 'Remove Punctuation',
@@ -84,6 +88,10 @@ class I18n {
         
         // Generator
         'placeholder-length': 'Metin Uzunluğu',
+        'type-lorem': 'Lorem Ipsum',
+        'type-alphanumerical': 'Alfanümerik (abc123)',
+        'type-special': 'Özel karakterler',
+        'type-turkish-german': 'Türkçe/Almanca harfler',
         'unit-characters': 'Karakter',
         'unit-words': 'Kelime',
         'label-remove-punct': 'Noktalama İşaretlerini Kaldır',

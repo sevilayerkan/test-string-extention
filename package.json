@@ -4,7 +4,7 @@
   "description": "Chrome extension to generate test strings",
   "main": "popup.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node -e \"global.window=undefined; const g=require('./src/js/func.js'); Object.assign(global,g); const r=require('./tests/func-tests.js'); process.exit(r.failed?1:0)\"",
     "build": "echo \"No build step required\" && exit 0",
     "lint": "eslint *.js src/js/*.js",
     "format": "prettier --write *.{js,html,css,json}"

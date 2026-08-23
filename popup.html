@@ -27,9 +27,28 @@
 
       <div id="generator" class="tab-content active">
         <div class="option-group active">
+          <div class="text-type-options">
+            <label class="radio-wrapper">
+              <input type="radio" name="textType" value="lorem" checked>
+              <span class="radio-label" data-i18n="type-lorem">Lorem Ipsum</span>
+            </label>
+            <label class="radio-wrapper">
+              <input type="radio" name="textType" value="alphanumerical">
+              <span class="radio-label" data-i18n="type-alphanumerical">Alphanumerical (abc123)</span>
+            </label>
+            <label class="radio-wrapper">
+              <input type="radio" name="textType" value="specialChars">
+              <span class="radio-label" data-i18n="type-special">Special characters</span>
+            </label>
+            <label class="radio-wrapper">
+              <input type="radio" name="textType" value="turkishGerman">
+              <span class="radio-label" data-i18n="type-turkish-german">Turkish/German letters</span>
+            </label>
+          </div>
+
           <div class="length-input-container">
             <input type="number" id="lengthInput" data-i18n-placeholder="placeholder-length" placeholder="Text Length" min="1" max="999999" value="1">
-            <div class="unit-toggle">
+            <div class="unit-toggle" id="unitToggleWrap">
               <button type="button" id="unitToggle" class="unit-toggle-btn" data-unit="characters">
                 <span class="unit-label" data-i18n="unit-characters">Characters</span>
                 <svg class="toggle-icon" viewBox="0 0 24 24" fill="currentColor">
@@ -39,7 +58,7 @@
             </div>
           </div>
           
-          <div class="checkbox-row">
+          <div class="checkbox-row" id="loremOptions">
             <label class="checkbox-wrapper">
               <input type="checkbox" id="removePunct">
               <span class="checkbox-label" data-i18n="label-remove-punct">Remove Punctuation</span>

@@ -61,18 +61,15 @@ Once installed, the extension works completely offline, allowing users to contin
 ## Usage
 
 1. Click on the extension icon to open the popup.
-2. Enter the desired text length for generation.
-3. Use the following options to customize the text:
-   - **Remove Punctuation**: Exclude punctuation marks from the generated text.
-   - **Remove Spaces**: Remove spaces between words.
-4. Use the **Character Counter** to see the real-time length of the given text.
-5. Navigate to the **Miscellaneous** tab for additional tools:
-   - Generate **Turkish Names** for use in test scenarios.
-   - Generate **Email Adresses** for use in test scenarios.
-   - Create **Turkish Addresses** for testing localization.
-   - Generate secure **Passwords** for test accounts or other needs.
-6. Click "Generate" to create the customized text.
-7. Copy the generated text to the clipboard using the "Copy to Clipboard" button.
+2. Select a generation type:
+   - **Lorem Ipsum**: Traditional placeholder text (supports character/word length, plus remove punctuation/spaces).
+   - **Alphanumerical**: Letters and numbers only (`abc123`).
+   - **Special characters**: Letters, numbers, and symbols.
+   - **Turkish/German letters**: Includes `ç, ğ, ı, ö, ş, ü, ä, ß`.
+3. Enter the desired length (1–999,999).
+4. Click **Generate Text**, then **Copy to Clipboard**.
+5. Use the **Character Counter** tab for live stats.
+6. Use the **Miscellaneous** tab for names, emails, addresses, and passwords.
 
 ## Honorable Mentions
 
@@ -87,7 +84,7 @@ Special thanks to my friend’s repository for its inspiration and usage:
 - **Miscellaneous Tools Section**: Room for future expansions and added utilities. For now it supports Turkish name, address, email, and password generation.
 - **Dark Mode Support** (Upcoming): Switch between light and dark modes for a better user experience. 
 - **Character Counter**: Real-time character counter to track text length dynamically.
-- **Random Text Generation**: Generate customizable random strings with options for uppercase letters, numbers, and symbols.
+- **Text Generation Types**: Lorem Ipsum, alphanumerical, special characters, and Turkish/German letters.
 - **Offline Functionality**: Full functionality without requiring an internet or AI connection.
 
 ## Support

@@ -207,6 +207,21 @@ body {
   flex-wrap: wrap;
 }
 
+.text-type-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 8px;
+}
+
+.text-type-options .radio-wrapper {
+  padding: 4px 0;
+}
+
+.text-type-options .radio-label {
+  font-size: 12px;
+  line-height: 1.3;
+}
+
 /* Bulk Generation Options */
 .bulk-options {
   background: var(--surface-color);

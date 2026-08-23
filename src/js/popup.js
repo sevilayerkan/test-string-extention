@@ -18,6 +18,7 @@ class PopupManager {
     this.initializeCharacterCounter();
     this.bindEvents();
     this.updateUnitToggleText();
+    this.updateGeneratorOptions();
     
     this.isInitialized = true;
   }
@@ -46,7 +47,10 @@ class PopupManager {
       counterText: document.getElementById('counterText'),
       characterCount: document.getElementById('characterCount'),
       tabButtons: document.querySelectorAll('.tab-button'),
-      tabContents: document.querySelectorAll('.tab-content')
+      tabContents: document.querySelectorAll('.tab-content'),
+      textTypeRadios: document.querySelectorAll('input[name="textType"]'),
+      loremOptions: document.getElementById('loremOptions'),
+      unitToggleWrap: document.getElementById('unitToggleWrap')
     };
   }
   
@@ -77,6 +81,12 @@ class PopupManager {
       this.toggleUnit();
     });
 
+    this.elements.textTypeRadios?.forEach((radio) => {
+      radio.addEventListener('change', () => {
+        this.updateGeneratorOptions();
+      });
+    });
+
     // Listen for language changes
     window.addEventListener('languageChanged', () => {
       this.updateCharacterCount();
@@ -88,7 +98,10 @@ class PopupManager {
     const length = parseInt(this.elements.lengthInput?.value);
     const removePunct = this.elements.removePunct?.checked || false;
     const removeSpace = this.elements.removeSpace?.checked || false;
-    const unit = this.elements.unitToggle?.getAttribute('data-unit') || 'characters';
+    const textType = this.getSelectedTextType();
+    const unit = textType === 'lorem'
+      ? (this.elements.unitToggle?.getAttribute('data-unit') || 'characters')
+      : 'characters';
     
     // Validation
     if (!this.validateLength(length)) {
@@ -105,7 +118,7 @@ class PopupManager {
         // requested length instead of shrinking after the fact.
         const text = unit === 'words'
           ? window.generateWords(length, removeSpace, removePunct)
-          : window.generateText(length, removeSpace, removePunct);
+          : window.generateTextByType(textType, length, removeSpace, removePunct);
         
         if (this.elements.resultText) {
           this.elements.resultText.value = text;
@@ -163,6 +176,21 @@ class PopupManager {
     }
   }
   
+  getSelectedTextType() {
+    const selected = document.querySelector('input[name="textType"]:checked');
+    return selected?.value || 'lorem';
+  }
+
+  updateGeneratorOptions() {
+    const isLorem = this.getSelectedTextType() === 'lorem';
+    if (this.elements.loremOptions) {
+      this.elements.loremOptions.hidden = !isLorem;
+    }
+    if (this.elements.unitToggleWrap) {
+      this.elements.unitToggleWrap.hidden = !isLorem;
+    }
+  }
+
   toggleUnit() {
     const currentUnit = this.elements.unitToggle?.getAttribute('data-unit') || 'characters';
     const newUnit = currentUnit === 'characters' ? 'words' : 'characters';
