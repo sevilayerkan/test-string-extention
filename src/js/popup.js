@@ -11,12 +11,14 @@ class PopupManager {
   async initialize() {
     if (this.isInitialized) return;
     
-    // Wait for i18n to be ready
     await this.waitForI18n();
-    
+    await window.uiState?.ready;
+
     this.cacheElements();
     this.clearTextarea();
+    this.applyGeneratorState();
     this.initializeTabs();
+    this.restoreActiveTab();
     this.initializeCharacterCounter();
     this.bindEvents();
     this.updateUnitToggleText();
@@ -74,6 +76,7 @@ class PopupManager {
     // Input validation
     this.elements.lengthInput?.addEventListener('input', (e) => {
       this.validateLengthInput(e.target);
+      this.persistGeneratorState();
     });
     
     // Enter key support for generation
@@ -86,10 +89,25 @@ class PopupManager {
     // Unit toggle functionality
     this.elements.unitToggle?.addEventListener('click', () => {
       this.toggleUnit();
+      this.persistGeneratorState({ immediate: true });
     });
 
     this.elements.textTypeSelect?.addEventListener('change', () => {
       this.updateGeneratorOptions();
+      this.persistGeneratorState({ immediate: true });
+    });
+
+    [
+      this.elements.removePunct,
+      this.elements.removeSpace,
+      this.elements.charsetAlphabetical,
+      this.elements.charsetNumerical,
+      this.elements.charsetSpecial,
+      this.elements.charsetTurkishGerman
+    ].forEach((checkbox) => {
+      checkbox?.addEventListener('change', () => {
+        this.persistGeneratorState();
+      });
     });
 
     // Listen for language changes
@@ -284,6 +302,66 @@ class PopupManager {
     if (targetTab === 'counter') {
       this.updateCharacterCount();
     }
+
+    window.uiState?.patch({ tab: targetTab }, { immediate: true });
+  }
+
+  applyGeneratorState() {
+    const state = window.uiState?.get();
+    if (!state) return;
+
+    if (this.elements.lengthInput) {
+      this.elements.lengthInput.value = String(state.length);
+    }
+    if (this.elements.unitToggle) {
+      this.elements.unitToggle.setAttribute('data-unit', state.unit);
+    }
+    if (this.elements.textTypeSelect) {
+      this.elements.textTypeSelect.value = state.textType;
+    }
+    if (this.elements.removePunct) {
+      this.elements.removePunct.checked = state.removePunct;
+    }
+    if (this.elements.removeSpace) {
+      this.elements.removeSpace.checked = state.removeSpace;
+    }
+    if (this.elements.charsetAlphabetical) {
+      this.elements.charsetAlphabetical.checked = state.charsetAlphabetical;
+    }
+    if (this.elements.charsetNumerical) {
+      this.elements.charsetNumerical.checked = state.charsetNumerical;
+    }
+    if (this.elements.charsetSpecial) {
+      this.elements.charsetSpecial.checked = state.charsetSpecial;
+    }
+    if (this.elements.charsetTurkishGerman) {
+      this.elements.charsetTurkishGerman.checked = state.charsetTurkishGerman;
+    }
+  }
+
+  restoreActiveTab() {
+    const tab = window.uiState?.get()?.tab || 'generator';
+    const button = [...(this.elements.tabButtons || [])].find(
+      (tabButton) => tabButton.getAttribute('data-tab') === tab
+    );
+    if (button) {
+      this.switchTab(tab, button);
+    }
+  }
+
+  persistGeneratorState(options = {}) {
+    const charset = this.getCharsetOptions();
+    window.uiState?.patch({
+      length: parseInt(this.elements.lengthInput?.value, 10) || 1,
+      unit: this.elements.unitToggle?.getAttribute('data-unit') || 'characters',
+      textType: this.getSelectedTextType(),
+      removePunct: this.elements.removePunct?.checked || false,
+      removeSpace: this.elements.removeSpace?.checked || false,
+      charsetAlphabetical: charset.alphabetical,
+      charsetNumerical: charset.numerical,
+      charsetSpecial: charset.special,
+      charsetTurkishGerman: charset.turkishGerman
+    }, options);
   }
   
   initializeCharacterCounter() {

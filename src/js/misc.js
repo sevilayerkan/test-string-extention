@@ -38,7 +38,8 @@ class MiscDataGenerator {
       await window.i18n.ready;
       this.currentLanguage = window.i18n.getCurrentLanguage();
     }
-    
+
+    await window.uiState?.ready;
     await this.loadAllData();
     this.initializeUI();
   }
@@ -161,41 +162,44 @@ class MiscDataGenerator {
   
   initializeUI() {
     const dataTypeSelect = document.getElementById('dataTypeSelect');
-    const genderOptions = document.getElementById('genderOptions');
-    const emailOptions = document.getElementById('emailOptions');
     const customDomain = document.getElementById('customDomain');
     const domainSelect = document.getElementById('domainSelect');
     const generateButton = document.getElementById('generateMiscButton');
     const copyButton = document.getElementById('copyMiscButton');
     
     if (!dataTypeSelect) return;
-    
-    // Data type selection handler
+
     dataTypeSelect.addEventListener('change', () => {
-      const selectedType = dataTypeSelect.value;
-      
-      // Hide all option groups
-      genderOptions?.classList.remove('active');
-      emailOptions?.classList.remove('active');
-      
-      // Show relevant options
-      if (selectedType === 'name') {
-        genderOptions?.classList.add('active');
-      } else if (selectedType === 'email') {
-        emailOptions?.classList.add('active');
-      }
+      this.updateMiscOptionVisibility();
+      this.persistMiscState({ immediate: true });
     });
-    
-    // Domain selection handler
+
     if (domainSelect) {
       domainSelect.addEventListener('change', () => {
-        const isCustom = domainSelect.value === 'custom';
-        if (customDomain) {
-          customDomain.style.display = isCustom ? 'block' : 'none';
-          customDomain.required = isCustom;
-        }
+        this.updateMiscOptionVisibility();
+        this.persistMiscState({ immediate: true });
       });
     }
+
+    customDomain?.addEventListener('input', () => {
+      this.persistMiscState();
+    });
+
+    document.querySelectorAll('input[name="gender"]').forEach((radio) => {
+      radio.addEventListener('change', () => {
+        this.persistMiscState({ immediate: true });
+      });
+    });
+
+    document.getElementById('bulkCount')?.addEventListener('input', () => {
+      this.persistMiscState();
+    });
+
+    document.getElementById('outputFormat')?.addEventListener('change', () => {
+      this.persistMiscState({ immediate: true });
+    });
+
+    this.restoreMiscState();
     
     // Generate button handler
     if (generateButton) {
@@ -206,6 +210,61 @@ class MiscDataGenerator {
     if (copyButton) {
       copyButton.addEventListener('click', () => this.copyMiscResult());
     }
+  }
+
+  updateMiscOptionVisibility() {
+    const dataType = document.getElementById('dataTypeSelect')?.value;
+    const genderOptions = document.getElementById('genderOptions');
+    const emailOptions = document.getElementById('emailOptions');
+    const customDomain = document.getElementById('customDomain');
+    const domainSelect = document.getElementById('domainSelect');
+
+    genderOptions?.classList.remove('active');
+    emailOptions?.classList.remove('active');
+
+    if (dataType === 'name') {
+      genderOptions?.classList.add('active');
+    } else if (dataType === 'email') {
+      emailOptions?.classList.add('active');
+    }
+
+    const isCustom = domainSelect?.value === 'custom';
+    if (customDomain) {
+      customDomain.style.display = isCustom ? 'block' : 'none';
+      customDomain.required = isCustom;
+    }
+  }
+
+  restoreMiscState() {
+    const state = window.uiState?.get();
+    if (!state) return;
+
+    const dataTypeSelect = document.getElementById('dataTypeSelect');
+    const domainSelect = document.getElementById('domainSelect');
+    const customDomain = document.getElementById('customDomain');
+    const bulkCount = document.getElementById('bulkCount');
+    const outputFormat = document.getElementById('outputFormat');
+    const genderRadio = document.querySelector(`input[name="gender"][value="${state.gender}"]`);
+
+    if (dataTypeSelect) dataTypeSelect.value = state.miscType;
+    if (domainSelect) domainSelect.value = state.domain;
+    if (customDomain) customDomain.value = state.customDomain;
+    if (bulkCount) bulkCount.value = String(state.miscCount);
+    if (outputFormat) outputFormat.value = state.miscFormat;
+    if (genderRadio) genderRadio.checked = true;
+
+    this.updateMiscOptionVisibility();
+  }
+
+  persistMiscState(options = {}) {
+    window.uiState?.patch({
+      miscType: document.getElementById('dataTypeSelect')?.value || '',
+      miscCount: parseInt(document.getElementById('bulkCount')?.value, 10) || 1,
+      miscFormat: document.getElementById('outputFormat')?.value || 'plain',
+      gender: document.querySelector('input[name="gender"]:checked')?.value || 'male',
+      domain: document.getElementById('domainSelect')?.value || 'random',
+      customDomain: document.getElementById('customDomain')?.value || ''
+    }, options);
   }
   
   getCurrentData() {
