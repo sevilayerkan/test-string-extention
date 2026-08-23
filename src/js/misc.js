@@ -300,6 +300,21 @@ class MiscDataGenerator {
           case 'password':
             result = this.generatePassword();
             break;
+          case 'phone':
+            result = this.generatePhone();
+            break;
+          case 'uuid':
+            result = window.generateUuid();
+            break;
+          case 'date':
+            result = window.generateDate();
+            break;
+          case 'tckn':
+            result = window.generateTckn();
+            break;
+          case 'username':
+            result = this.generateUsername();
+            break;
           default:
             throw new Error('Invalid data type');
         }
@@ -316,8 +331,11 @@ class MiscDataGenerator {
   
   generateFullName() {
     const data = this.getCurrentData();
-    const gender = document.querySelector('input[name="gender"]:checked')?.value || 'male';
-    
+    let gender = document.querySelector('input[name="gender"]:checked')?.value || 'male';
+    if (gender === 'random') {
+      gender = Math.random() < 0.5 ? 'male' : 'female';
+    }
+
     const firstNames = gender === 'male' ? data.maleNames : data.femaleNames;
     const firstNamesList = Array.isArray(firstNames) ? firstNames : [];
     const surnamesList = Array.isArray(data.surnames) ? data.surnames : [];
@@ -330,6 +348,28 @@ class MiscDataGenerator {
     const surname = this.getRandomItem(surnamesList);
     
     return `${firstName} ${surname}`;
+  }
+
+  generatePhone() {
+    if (typeof window.generatePhone !== 'function') {
+      throw new Error('Phone generator is not available');
+    }
+    return window.generatePhone(this.currentLanguage);
+  }
+
+  generateUsername() {
+    const data = this.getCurrentData();
+    const firstNames = [...(data.maleNames || []), ...(data.femaleNames || [])];
+    if (firstNames.length === 0) {
+      throw new Error('Name data not available for username generation');
+    }
+
+    const local = this.sanitizeEmailLocalPart(this.getRandomItem(firstNames));
+    if (!local) {
+      throw new Error('Name data not available for username generation');
+    }
+
+    return `${local}${Math.floor(Math.random() * 10000)}`;
   }
   
   generateEmail() {

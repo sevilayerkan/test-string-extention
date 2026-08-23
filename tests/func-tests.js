@@ -6,7 +6,12 @@
     generateWithSpecialChars,
     generateWithTurkishGerman,
     generateCustomText,
-    generateTextByType
+    generateTextByType,
+    generatePhone,
+    generateUuid,
+    generateDate,
+    generateTckn,
+    isValidTckn
   } = global;
 
   const results = [];
@@ -130,6 +135,38 @@
     const numberRatio = numbers / text.length;
     assert(letterRatio >= 0.7 && letterRatio <= 0.95, `letter ratio out of range: ${letterRatio}`);
     assert(numberRatio >= 0.05 && numberRatio <= 0.3, `number ratio out of range: ${numberRatio}`);
+  });
+
+  test('generatePhone should return a TR mobile number for tr locale', () => {
+    const phone = generatePhone('tr');
+    assert(/^05[0-9]{9}$/.test(phone), `unexpected TR phone: ${phone}`);
+  });
+
+  test('generatePhone should return a fictional US number for en locale', () => {
+    const phone = generatePhone('en');
+    assert(/^\+1-555-[0-9]{3}-[0-9]{4}$/.test(phone), `unexpected EN phone: ${phone}`);
+  });
+
+  test('generateUuid should return a UUID v4', () => {
+    const uuid = generateUuid();
+    assert(
+      /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(uuid),
+      `unexpected UUID: ${uuid}`
+    );
+  });
+
+  test('generateDate should return an ISO date in range', () => {
+    const date = generateDate(2000, 2010);
+    assert(/^\d{4}-\d{2}-\d{2}$/.test(date), `unexpected date: ${date}`);
+    const year = parseInt(date.slice(0, 4), 10);
+    assert(year >= 2000 && year <= 2010, `year out of range: ${date}`);
+  });
+
+  test('generateTckn should produce valid 11-digit numbers', () => {
+    for (let i = 0; i < 50; i++) {
+      const tckn = generateTckn();
+      assert(isValidTckn(tckn), `invalid TCKN: ${tckn}`);
+    }
   });
 
   const passed = results.filter((item) => item.ok).length;

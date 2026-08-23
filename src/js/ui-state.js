@@ -31,9 +31,20 @@ const ALLOWED_TEXT_TYPES = new Set([
   'turkishGerman',
   'custom'
 ]);
-const ALLOWED_MISC_TYPES = new Set(['', 'name', 'email', 'address', 'password']);
+const ALLOWED_MISC_TYPES = new Set([
+  '',
+  'name',
+  'email',
+  'address',
+  'password',
+  'phone',
+  'uuid',
+  'date',
+  'tckn',
+  'username'
+]);
 const ALLOWED_MISC_FORMATS = new Set(['plain', 'json', 'json-with-id']);
-const ALLOWED_GENDERS = new Set(['male', 'female']);
+const ALLOWED_GENDERS = new Set(['male', 'female', 'random']);
 const ALLOWED_DOMAINS = new Set(['random', 'example.com', 'test.com', 'custom']);
 
 function hasChromeLocalStorage() {
