@@ -54,7 +54,8 @@ class PopupManager {
       charsetNumerical: document.getElementById('charsetNumerical'),
       charsetSpecial: document.getElementById('charsetSpecial'),
       charsetTurkishGerman: document.getElementById('charsetTurkishGerman'),
-      unitToggleWrap: document.getElementById('unitToggleWrap')
+      unitToggleWrap: document.getElementById('unitToggleWrap'),
+      loremOptions: document.getElementById('loremOptions')
     };
   }
   
@@ -204,6 +205,9 @@ class PopupManager {
     }
     if (this.elements.unitToggleWrap) {
       this.elements.unitToggleWrap.hidden = textType !== 'lorem';
+    }
+    if (this.elements.loremOptions) {
+      this.elements.loremOptions.hidden = textType !== 'lorem';
     }
   }
 
