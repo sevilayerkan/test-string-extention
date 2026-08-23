@@ -20,6 +20,7 @@ class I18n {
         'label-remove-punct': 'Remove Punctuation',
         'label-remove-space': 'Remove Spaces',
         'btn-generate': 'Generate Text',
+        'btn-generating': 'Generating...',
         'placeholder-result': 'Generated text will appear here...',
         'btn-copy': 'Copy to Clipboard',
         
@@ -62,6 +63,9 @@ class I18n {
         'msg-copied': 'Copied to clipboard!',
         'msg-copy-failed': 'Failed to copy to clipboard',
         'msg-no-text': 'No text to copy',
+        'msg-no-data': 'No data to copy',
+        'msg-generated': 'Generated successfully!',
+        'msg-generation-error': 'Error generating data',
         'msg-invalid-length': 'Please enter a valid positive number for length',
         'msg-max-length': 'Maximum length is 999,999 characters',
         'msg-select-type': 'Please select a data type',
@@ -85,6 +89,7 @@ class I18n {
         'label-remove-punct': 'Noktalama İşaretlerini Kaldır',
         'label-remove-space': 'Boşlukları Kaldır',
         'btn-generate': 'Metin Üret',
+        'btn-generating': 'Üretiliyor...',
         'placeholder-result': 'Üretilen metin burada görünecek...',
         'btn-copy': 'Panoya Kopyala',
         
@@ -127,6 +132,9 @@ class I18n {
         'msg-copied': 'Panoya kopyalandı!',
         'msg-copy-failed': 'Panoya kopyalama başarısız',
         'msg-no-text': 'Kopyalanacak metin yok',
+        'msg-no-data': 'Kopyalanacak veri yok',
+        'msg-generated': 'Başarıyla üretildi!',
+        'msg-generation-error': 'Veri üretilirken hata oluştu',
         'msg-invalid-length': 'Lütfen uzunluk için geçerli pozitif bir sayı girin',
         'msg-max-length': 'Maksimum uzunluk 999.999 karakterdir',
         'msg-select-type': 'Lütfen bir veri türü seçin',
@@ -134,7 +142,9 @@ class I18n {
       }
     };
     
-    this.initialize();
+    // Consumers await this before reading the language, since the stored
+    // preference arrives asynchronously.
+    this.ready = this.initialize();
   }
   
   async initialize() {
@@ -157,6 +167,10 @@ class I18n {
     }
     
     this.updateUI();
+    
+    window.dispatchEvent(new CustomEvent('languageChanged', {
+      detail: { language: this.currentLanguage }
+    }));
   }
   
   translate(key, fallback = '') {

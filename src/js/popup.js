@@ -30,6 +30,8 @@ class PopupManager {
       await new Promise(resolve => setTimeout(resolve, 100));
       retries++;
     }
+    
+    await window.i18n?.ready;
   }
   
   cacheElements() {
@@ -93,51 +95,30 @@ class PopupManager {
       return;
     }
     
-    try {
-      // Show loading state
-      this.setGenerateButtonState(true);
-      
-      // Generate text with slight delay for better UX
-      setTimeout(() => {
-        let text;
-        if (unit === 'words') {
-          text = window.generateWords ? window.generateWords(length) : window.generateText(length * 5);
-        } else {
-          text = window.generateText ? window.generateText(length) : this.generateFallbackText(length);
-        }
+    // Show loading state
+    this.setGenerateButtonState(true);
+    
+    // Generate text with slight delay for better UX
+    setTimeout(() => {
+      try {
+        // Filters are applied by the generators so the output keeps the exact
+        // requested length instead of shrinking after the fact.
+        const text = unit === 'words'
+          ? window.generateWords(length, removeSpace, removePunct)
+          : window.generateText(length, removeSpace, removePunct);
         
-        // Apply filters
-        if (removePunct) {
-          text = text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
-        }
-        
-        if (removeSpace) {
-          text = text.replace(/\s/g, '');
-        }
-        
-        // Update result
         if (this.elements.resultText) {
           this.elements.resultText.value = text;
         }
         
         this.showFeedback(window.i18n?.translate('msg-generated') || 'Text generated successfully!');
+      } catch (error) {
+        console.error('Generation error:', error);
+        this.showFeedback(window.i18n?.translate('msg-generation-error') || 'Error generating text', 'error');
+      } finally {
         this.setGenerateButtonState(false);
-      }, 100);
-      
-    } catch (error) {
-      console.error('Generation error:', error);
-      this.showFeedback(window.i18n?.translate('msg-generation-error') || 'Error generating text', 'error');
-      this.setGenerateButtonState(false);
-    }
-  }
-  
-  generateFallbackText(length) {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
+      }
+    }, 100);
   }
   
   handleCopy() {
@@ -151,7 +132,7 @@ class PopupManager {
       this.showFeedback(window.i18n?.translate('msg-copied') || 'Copied to clipboard!');
     }).catch(err => {
       console.error('Failed to copy text:', err);
-      this.showFeedback(window.i18n?.translate('msg-copy-error') || 'Failed to copy text', 'error');
+      this.showFeedback(window.i18n?.translate('msg-copy-failed') || 'Failed to copy text', 'error');
     });
   }
   
@@ -163,7 +144,7 @@ class PopupManager {
     
     const maxLength = 999999;
     if (length > maxLength) {
-      this.showFeedback(window.i18n?.translate('msg-length-too-large') || `Length cannot exceed ${maxLength}`, 'error');
+      this.showFeedback(window.i18n?.translate('msg-max-length') || `Length cannot exceed ${maxLength}`, 'error');
       return false;
     }
     

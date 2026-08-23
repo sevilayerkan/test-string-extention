@@ -33,8 +33,9 @@ class MiscDataGenerator {
       this.currentLanguage = e.detail.language;
     });
     
-    // Get current language from i18n
+    // Get current language from i18n once its stored preference is resolved
     if (window.i18n) {
+      await window.i18n.ready;
       this.currentLanguage = window.i18n.getCurrentLanguage();
     }
     
@@ -209,7 +210,8 @@ class MiscDataGenerator {
   
   getCurrentData() {
     const data = this.DATA[this.currentLanguage];
-    return data && Object.keys(data).length > 0 ? data : this.DATA.tr;
+    const hasEntries = data && Object.values(data).some(list => Array.isArray(list) && list.length > 0);
+    return hasEntries ? data : this.DATA.tr;
   }
   
   generateMiscData() {
@@ -376,7 +378,7 @@ class MiscDataGenerator {
       this.showFeedback(window.i18n?.translate('msg-copied') || 'Copied to clipboard!');
     }).catch(err => {
       console.error('Failed to copy:', err);
-      this.showFeedback(window.i18n?.translate('msg-copy-error') || 'Failed to copy to clipboard', 'error');
+      this.showFeedback(window.i18n?.translate('msg-copy-failed') || 'Failed to copy to clipboard', 'error');
     });
   }
   

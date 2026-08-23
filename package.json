@@ -1,12 +1,12 @@
 {
   "name": "test-string-generator",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Chrome extension to generate test strings",
   "main": "popup.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "echo \"No build step required\" && exit 0",
-    "lint": "eslint *.js",
+    "lint": "eslint *.js src/js/*.js",
     "format": "prettier --write *.{js,html,css,json}"
   },
   "keywords": [
