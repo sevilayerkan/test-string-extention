@@ -1,4 +1,4 @@
-const MAX_GENERATION_LENGTH = 10000;
+const MAX_GENERATION_LENGTH = 100000;
 
 // Enhanced Popup Management System
 class PopupManager {
@@ -263,6 +263,8 @@ class PopupManager {
   showFeedback(message, type = 'success') {
     const feedback = document.createElement('div');
     feedback.className = `feedback ${type}`;
+    feedback.setAttribute('role', 'status');
+    feedback.setAttribute('aria-live', type === 'error' ? 'assertive' : 'polite');
     feedback.textContent = message;
     document.body.appendChild(feedback);
     
@@ -283,21 +285,56 @@ class PopupManager {
   }
   
   initializeTabs() {
-    this.elements.tabButtons?.forEach(button => {
+    const tabButtons = [...(this.elements.tabButtons || [])];
+    tabButtons.forEach((button, index) => {
       button.addEventListener('click', () => {
-        const targetTab = button.getAttribute('data-tab');
-        this.switchTab(targetTab, button);
+        this.switchTab(button.getAttribute('data-tab'), button);
+      });
+      button.addEventListener('keydown', (event) => {
+        this.handleTabKeydown(event, tabButtons, index);
       });
     });
   }
+
+  handleTabKeydown(event, tabButtons, index) {
+    let nextIndex = null;
+    if (event.key === 'ArrowRight') {
+      nextIndex = (index + 1) % tabButtons.length;
+    } else if (event.key === 'ArrowLeft') {
+      nextIndex = (index - 1 + tabButtons.length) % tabButtons.length;
+    } else if (event.key === 'Home') {
+      nextIndex = 0;
+    } else if (event.key === 'End') {
+      nextIndex = tabButtons.length - 1;
+    }
+
+    if (nextIndex === null) {
+      return;
+    }
+
+    event.preventDefault();
+    const nextButton = tabButtons[nextIndex];
+    this.switchTab(nextButton.getAttribute('data-tab'), nextButton, { focusTab: true });
+  }
   
-  switchTab(targetTab, activeButton) {
-    // Remove active class from all tabs and buttons
-    this.elements.tabButtons?.forEach(btn => btn.classList.remove('active'));
-    this.elements.tabContents?.forEach(content => content.classList.remove('active'));
-    
-    activeButton?.classList.add('active');
-    document.getElementById(targetTab)?.classList.add('active');
+  switchTab(targetTab, activeButton, options = {}) {
+    this.elements.tabButtons?.forEach((button) => {
+      const isActive = button === activeButton;
+      button.classList.toggle('active', isActive);
+      button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      button.tabIndex = isActive ? 0 : -1;
+    });
+
+    this.elements.tabContents?.forEach((content) => {
+      const isActive = content.id === targetTab;
+      content.classList.toggle('active', isActive);
+      content.hidden = !isActive;
+      content.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+    });
+
+    if (options.focusTab) {
+      activeButton?.focus();
+    }
 
     if (targetTab === 'counter') {
       this.updateCharacterCount();

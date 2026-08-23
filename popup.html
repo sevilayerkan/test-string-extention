@@ -8,27 +8,27 @@
 </head>
 <body>
   <div class="app-container">
-    <div class="app-content">
+    <div id="appContent" class="app-content">
       <!-- Header with Settings -->
       <header class="app-header">
         <h1 data-i18n="app-title">Test String Generator</h1>
-        <button id="settingsButton" class="settings-button" aria-label="Settings" title="Settings">
+        <button id="settingsButton" class="settings-button" type="button" data-i18n-aria-label="settings-open" aria-label="Settings" title="Settings">
           <svg viewBox="0 0 24 24" fill="currentColor">
             <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
           </svg>
         </button>
       </header>
       
-      <div class="tabs">
-        <button class="tab-button active" data-tab="generator" data-i18n="tab-generator">Generator</button>
-        <button class="tab-button" data-tab="counter" data-i18n="tab-counter">Counter</button>
-        <button class="tab-button" data-tab="misc" data-i18n="tab-misc">Misc</button>
+      <div class="tabs" role="tablist" data-i18n-aria-label="tabs-label" aria-label="Main sections">
+        <button type="button" class="tab-button active" role="tab" id="tab-generator" data-tab="generator" aria-controls="generator" aria-selected="true" tabindex="0" data-i18n="tab-generator">Generator</button>
+        <button type="button" class="tab-button" role="tab" id="tab-counter" data-tab="counter" aria-controls="counter" aria-selected="false" tabindex="-1" data-i18n="tab-counter">Counter</button>
+        <button type="button" class="tab-button" role="tab" id="tab-misc" data-tab="misc" aria-controls="misc" aria-selected="false" tabindex="-1" data-i18n="tab-misc">Misc</button>
       </div>
 
-      <div id="generator" class="tab-content active">
+      <div id="generator" class="tab-content active" role="tabpanel" aria-labelledby="tab-generator">
         <div class="option-group active">
           <div class="length-input-container">
-            <input type="number" id="lengthInput" data-i18n-placeholder="placeholder-length" placeholder="Text Length" min="1" max="10000" value="1">
+            <input type="number" id="lengthInput" data-i18n-placeholder="placeholder-length" data-i18n-aria-label="placeholder-length" placeholder="Text Length" aria-label="Text Length" min="1" max="10000" value="1">
             <div class="unit-toggle" id="unitToggleWrap">
               <button type="button" id="unitToggle" class="unit-toggle-btn" data-unit="characters">
                 <span class="unit-label" data-i18n="unit-characters">Characters</span>
@@ -83,7 +83,7 @@
         <button id="copyButton" class="secondary-button" data-i18n="btn-copy">Copy to Clipboard</button>
       </div>
 
-      <div id="counter" class="tab-content">
+      <div id="counter" class="tab-content" role="tabpanel" aria-labelledby="tab-counter" hidden>
         <textarea id="counterText" data-i18n-placeholder="placeholder-counter" placeholder="Enter or paste your text here..."></textarea>
         <div id="characterCount" class="counter-stats">
           <div class="stats-row">
@@ -113,7 +113,7 @@
         </div>
       </div>
 
-      <div id="misc" class="tab-content">
+      <div id="misc" class="tab-content" role="tabpanel" aria-labelledby="tab-misc" hidden>
         <select id="dataTypeSelect" class="data-type-select">
           <option value="" data-i18n="select-data-type">Select Data Type</option>
           <option value="name" data-i18n="option-name">Full Name</option>
@@ -175,24 +175,24 @@
     </div>
 
     <!-- Settings Modal -->
-    <div id="settingsModal" class="modal" style="display: none;">
+    <div id="settingsModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" aria-hidden="true" style="display: none;">
       <div class="modal-content">
         <div class="modal-header">
-          <h2 data-i18n="settings-title">Settings</h2>
-          <button id="closeSettings" class="close-button" aria-label="Close">&times;</button>
+          <h2 id="settingsTitle" tabindex="-1" data-i18n="settings-title">Settings</h2>
+          <button id="closeSettings" class="close-button" type="button" data-i18n-aria-label="settings-close" aria-label="Close">&times;</button>
         </div>
         
         <div class="modal-body">
-          <div class="setting-group">
-            <label class="setting-label" data-i18n="setting-theme">Theme</label>
+          <div class="setting-group" role="group" aria-labelledby="themeLabel">
+            <p id="themeLabel" class="setting-label" data-i18n="setting-theme">Theme</p>
             <div class="theme-selector">
-              <button id="lightTheme" class="theme-button active" data-theme="light" data-i18n="theme-light">Light</button>
-              <button id="darkTheme" class="theme-button" data-theme="dark" data-i18n="theme-dark">Dark</button>
+              <button id="lightTheme" class="theme-button active" type="button" data-theme="light" aria-pressed="true" data-i18n="theme-light">Light</button>
+              <button id="darkTheme" class="theme-button" type="button" data-theme="dark" aria-pressed="false" data-i18n="theme-dark">Dark</button>
             </div>
           </div>
 
           <div class="setting-group">
-            <label class="setting-label" data-i18n="setting-language">Language</label>
+            <label class="setting-label" for="languageSelect" data-i18n="setting-language">Language</label>
             <select id="languageSelect" class="select-input">
               <option value="en">English</option>
               <option value="tr">Türkçe</option>

@@ -12,6 +12,9 @@ class I18n {
         'tab-generator': 'Generator',
         'tab-counter': 'Counter',
         'tab-misc': 'Misc',
+        'tabs-label': 'Main sections',
+        'settings-open': 'Settings',
+        'settings-close': 'Close settings',
         
         // Generator
         'placeholder-length': 'Text Length',
@@ -97,6 +100,9 @@ class I18n {
         'tab-generator': 'Üretici',
         'tab-counter': 'Sayaç',
         'tab-misc': 'Diğer',
+        'tabs-label': 'Ana bölümler',
+        'settings-open': 'Ayarlar',
+        'settings-close': 'Ayarları kapat',
         
         // Generator
         'placeholder-length': 'Metin Uzunluğu',
@@ -250,8 +256,13 @@ class I18n {
       const key = element.getAttribute('data-i18n-placeholder');
       element.placeholder = this.translate(key);
     });
-    
-    // Update HTML lang attribute
+
+    document.querySelectorAll('[data-i18n-aria-label]').forEach(element => {
+      const key = element.getAttribute('data-i18n-aria-label');
+      element.setAttribute('aria-label', this.translate(key));
+    });
+
+    document.title = this.translate('app-title');
     document.documentElement.lang = this.currentLanguage;
   }
   

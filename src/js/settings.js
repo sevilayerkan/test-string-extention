@@ -5,6 +5,8 @@ class SettingsManager {
       theme: 'light',
       language: 'en'
     };
+    this.lastFocused = null;
+    this.boundTrapFocus = (event) => this.trapFocus(event);
     
     this.initialize();
   }
@@ -75,9 +77,9 @@ class SettingsManager {
     //   }
     // });
     
-    // Escape key to close modal
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && settingsModal?.classList.contains('active')) {
+        e.preventDefault();
         this.closeModal();
       }
     });
@@ -104,33 +106,77 @@ class SettingsManager {
     this.updateSettingsUI();
   }
   
+  getFocusableElements(container) {
+    return [...container.querySelectorAll(
+      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )].filter((element) => !element.hasAttribute('hidden') && element.offsetParent !== null);
+  }
+
+  trapFocus(event) {
+    if (event.key !== 'Tab') {
+      return;
+    }
+
+    const modal = document.getElementById('settingsModal');
+    if (!modal) {
+      return;
+    }
+
+    const focusable = this.getFocusableElements(modal);
+    if (focusable.length === 0) {
+      event.preventDefault();
+      return;
+    }
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
   openModal() {
     const modal = document.getElementById('settingsModal');
+    const appContent = document.getElementById('appContent');
     
     if (modal) {
+      this.lastFocused = document.activeElement;
       modal.classList.add('active');
       modal.style.display = 'flex';
-      
-      // Focus trap
-      const focusableElements = modal.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-      if (focusableElements?.length > 0) {
-        focusableElements[0].focus();
+      modal.setAttribute('aria-hidden', 'false');
+      if (appContent) {
+        appContent.inert = true;
       }
+      modal.addEventListener('keydown', this.boundTrapFocus);
+      document.getElementById('settingsTitle')?.focus();
     }
   }
   
   closeModal() {
     const modal = document.getElementById('settingsModal');
+    const appContent = document.getElementById('appContent');
     
     if (modal) {
+      modal.removeEventListener('keydown', this.boundTrapFocus);
       modal.classList.remove('active');
       modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
     }
-    
-    // Return focus to settings button
-    document.getElementById('settingsButton')?.focus();
+
+    if (appContent) {
+      appContent.inert = false;
+    }
+
+    const restoreTarget = this.lastFocused && document.contains(this.lastFocused)
+      ? this.lastFocused
+      : document.getElementById('settingsButton');
+    restoreTarget?.focus();
+    this.lastFocused = null;
   }
   
   async setTheme(theme) {
@@ -177,6 +223,8 @@ class SettingsManager {
     
     lightTheme?.classList.toggle('active', this.settings.theme === 'light');
     darkTheme?.classList.toggle('active', this.settings.theme === 'dark');
+    lightTheme?.setAttribute('aria-pressed', this.settings.theme === 'light' ? 'true' : 'false');
+    darkTheme?.setAttribute('aria-pressed', this.settings.theme === 'dark' ? 'true' : 'false');
   }
   
   updateLanguageSelect() {

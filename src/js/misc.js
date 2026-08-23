@@ -150,6 +150,8 @@ class MiscDataGenerator {
   showFeedback(message, type = 'success') {
     const feedback = document.createElement('div');
     feedback.className = `feedback ${type}`;
+    feedback.setAttribute('role', 'status');
+    feedback.setAttribute('aria-live', type === 'error' ? 'assertive' : 'polite');
     feedback.textContent = message;
     document.body.appendChild(feedback);
     
