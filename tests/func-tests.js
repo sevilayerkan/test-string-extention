@@ -5,7 +5,8 @@
     generateAlphanumerical,
     generateWithSpecialChars,
     generateWithTurkishGerman,
-    generateCustomText
+    generateCustomText,
+    generateTextByType
   } = global;
 
   const results = [];
@@ -89,6 +90,15 @@
   test('generateCustomText with no options should default to alphabetical', () => {
     const text = generateCustomText(50);
     assert(/^[a-zA-Z]+$/.test(text), 'expected alphabetical default');
+  });
+
+  test('generateTextByType custom should honor charset mix', () => {
+    const text = generateTextByType('custom', 80, false, false, {
+      alphabetical: true,
+      numerical: true
+    });
+    assert(/^[a-zA-Z0-9]+$/.test(text), 'custom mix should stay alphanumerical');
+    assert(text.length === 80, 'expected length 80');
   });
 
   test('All functions should handle length 1', () => {

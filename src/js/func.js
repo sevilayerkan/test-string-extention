@@ -102,7 +102,7 @@ function generateCustomText(length, options = {}) {
   return generateFromCharset(length, charset);
 }
 
-function generateTextByType(type, length, removeSpace, removePunct) {
+function generateTextByType(type, length, removeSpace, removePunct, charsetOptions) {
   switch (type) {
     case 'alphanumerical':
       return generateAlphanumerical(length);
@@ -110,6 +110,8 @@ function generateTextByType(type, length, removeSpace, removePunct) {
       return generateWithSpecialChars(length);
     case 'turkishGerman':
       return generateWithTurkishGerman(length);
+    case 'custom':
+      return generateCustomText(length, charsetOptions);
     case 'lorem':
     default:
       return generateLoremIpsum(length, removeSpace, removePunct);

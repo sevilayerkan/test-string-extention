@@ -48,8 +48,12 @@ class PopupManager {
       characterCount: document.getElementById('characterCount'),
       tabButtons: document.querySelectorAll('.tab-button'),
       tabContents: document.querySelectorAll('.tab-content'),
-      textTypeRadios: document.querySelectorAll('input[name="textType"]'),
-      loremOptions: document.getElementById('loremOptions'),
+      textTypeSelect: document.getElementById('textTypeSelect'),
+      charsetOptions: document.getElementById('charsetOptions'),
+      charsetAlphabetical: document.getElementById('charsetAlphabetical'),
+      charsetNumerical: document.getElementById('charsetNumerical'),
+      charsetSpecial: document.getElementById('charsetSpecial'),
+      charsetTurkishGerman: document.getElementById('charsetTurkishGerman'),
       unitToggleWrap: document.getElementById('unitToggleWrap')
     };
   }
@@ -81,10 +85,8 @@ class PopupManager {
       this.toggleUnit();
     });
 
-    this.elements.textTypeRadios?.forEach((radio) => {
-      radio.addEventListener('change', () => {
-        this.updateGeneratorOptions();
-      });
+    this.elements.textTypeSelect?.addEventListener('change', () => {
+      this.updateGeneratorOptions();
     });
 
     // Listen for language changes
@@ -118,7 +120,13 @@ class PopupManager {
         // requested length instead of shrinking after the fact.
         const text = unit === 'words'
           ? window.generateWords(length, removeSpace, removePunct)
-          : window.generateTextByType(textType, length, removeSpace, removePunct);
+          : window.generateTextByType(
+              textType,
+              length,
+              removeSpace,
+              removePunct,
+              this.getCharsetOptions()
+            );
         
         if (this.elements.resultText) {
           this.elements.resultText.value = text;
@@ -177,17 +185,25 @@ class PopupManager {
   }
   
   getSelectedTextType() {
-    const selected = document.querySelector('input[name="textType"]:checked');
-    return selected?.value || 'lorem';
+    return this.elements.textTypeSelect?.value || 'lorem';
+  }
+
+  getCharsetOptions() {
+    return {
+      alphabetical: this.elements.charsetAlphabetical?.checked || false,
+      numerical: this.elements.charsetNumerical?.checked || false,
+      special: this.elements.charsetSpecial?.checked || false,
+      turkishGerman: this.elements.charsetTurkishGerman?.checked || false
+    };
   }
 
   updateGeneratorOptions() {
-    const isLorem = this.getSelectedTextType() === 'lorem';
-    if (this.elements.loremOptions) {
-      this.elements.loremOptions.hidden = !isLorem;
+    const textType = this.getSelectedTextType();
+    if (this.elements.charsetOptions) {
+      this.elements.charsetOptions.hidden = textType !== 'custom';
     }
     if (this.elements.unitToggleWrap) {
-      this.elements.unitToggleWrap.hidden = !isLorem;
+      this.elements.unitToggleWrap.hidden = textType !== 'lorem';
     }
   }
 

@@ -27,25 +27,6 @@
 
       <div id="generator" class="tab-content active">
         <div class="option-group active">
-          <div class="text-type-options">
-            <label class="radio-wrapper">
-              <input type="radio" name="textType" value="lorem" checked>
-              <span class="radio-label" data-i18n="type-lorem">Lorem Ipsum</span>
-            </label>
-            <label class="radio-wrapper">
-              <input type="radio" name="textType" value="alphanumerical">
-              <span class="radio-label" data-i18n="type-alphanumerical">Alphanumerical (abc123)</span>
-            </label>
-            <label class="radio-wrapper">
-              <input type="radio" name="textType" value="specialChars">
-              <span class="radio-label" data-i18n="type-special">Special characters</span>
-            </label>
-            <label class="radio-wrapper">
-              <input type="radio" name="textType" value="turkishGerman">
-              <span class="radio-label" data-i18n="type-turkish-german">Turkish/German letters</span>
-            </label>
-          </div>
-
           <div class="length-input-container">
             <input type="number" id="lengthInput" data-i18n-placeholder="placeholder-length" placeholder="Text Length" min="1" max="999999" value="1">
             <div class="unit-toggle" id="unitToggleWrap">
@@ -57,13 +38,39 @@
               </button>
             </div>
           </div>
-          
+
+          <select id="textTypeSelect" class="select-input">
+            <option value="lorem" data-i18n="type-lorem">Lorem Ipsum</option>
+            <option value="alphanumerical" data-i18n="type-alphanumerical">Alphanumerical (abc123)</option>
+            <option value="specialChars" data-i18n="type-special">Special characters</option>
+            <option value="turkishGerman" data-i18n="type-turkish-german">Turkish/German letters</option>
+            <option value="custom" data-i18n="type-custom">Custom charset</option>
+          </select>
+
+          <div class="checkbox-row" id="charsetOptions" hidden>
+            <label class="checkbox-wrapper">
+              <input type="checkbox" id="charsetAlphabetical" checked>
+              <span class="checkbox-label" data-i18n="charset-letters">Letters</span>
+            </label>
+            <label class="checkbox-wrapper">
+              <input type="checkbox" id="charsetNumerical" checked>
+              <span class="checkbox-label" data-i18n="charset-numbers">Numbers</span>
+            </label>
+            <label class="checkbox-wrapper">
+              <input type="checkbox" id="charsetSpecial">
+              <span class="checkbox-label" data-i18n="charset-special">Special</span>
+            </label>
+            <label class="checkbox-wrapper">
+              <input type="checkbox" id="charsetTurkishGerman">
+              <span class="checkbox-label" data-i18n="charset-turkish-german">TR/DE</span>
+            </label>
+          </div>
+
           <div class="checkbox-row" id="loremOptions">
             <label class="checkbox-wrapper">
               <input type="checkbox" id="removePunct">
               <span class="checkbox-label" data-i18n="label-remove-punct">Remove Punctuation</span>
             </label>
-            
             <label class="checkbox-wrapper">
               <input type="checkbox" id="removeSpace">
               <span class="checkbox-label" data-i18n="label-remove-space">Remove Spaces</span>

@@ -66,6 +66,7 @@ Once installed, the extension works completely offline, allowing users to contin
    - **Alphanumerical**: Letters and numbers only (`abc123`).
    - **Special characters**: Letters, numbers, and symbols.
    - **Turkish/German letters**: Includes `ç, ğ, ı, ö, ş, ü, ä, ß`.
+   - **Custom charset**: Mix letters, numbers, special characters, and TR/DE letters.
 3. Enter the desired length (1–999,999).
 4. Click **Generate Text**, then **Copy to Clipboard**.
 5. Use the **Character Counter** tab for live stats.
@@ -84,7 +85,7 @@ Special thanks to my friend’s repository for its inspiration and usage:
 - **Miscellaneous Tools Section**: Room for future expansions and added utilities. For now it supports Turkish name, address, email, and password generation.
 - **Dark Mode Support** (Upcoming): Switch between light and dark modes for a better user experience. 
 - **Character Counter**: Real-time character counter to track text length dynamically.
-- **Text Generation Types**: Lorem Ipsum, alphanumerical, special characters, and Turkish/German letters.
+- **Text Generation Types**: Lorem Ipsum, alphanumerical, special characters, Turkish/German letters, and a custom charset mix.
 - **Offline Functionality**: Full functionality without requiring an internet or AI connection.
 
 ## Support
